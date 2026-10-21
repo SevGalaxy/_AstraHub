@@ -14,6 +14,10 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       min-height: 100vh;
       background: #090b14;
@@ -166,6 +170,15 @@
       font-size: 0.95rem;
     }
 
+    .info-section {
+      padding-bottom: 55px;
+    }
+
+    .info-section p {
+      color: #a7abc4;
+      line-height: 1.8;
+    }
+
     footer {
       text-align: center;
       padding: 28px 15px;
@@ -181,4 +194,109 @@
       }
 
       nav a {
-        ma
+        margin: 0 8px;
+      }
+
+      .hero {
+        padding: 80px 0 65px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">_<span>Astra</span>Hub</div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#explore">Explore</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="badge">✦ Welcome to my corner of the internet</div>
+
+      <h1>Welcome to<br><span>_AstraHub</span></h1>
+
+      <p>
+        One hub for my projects, creations, experiments, and future giveaways.
+        There's more to come, so stay tuned.
+      </p>
+
+      <div class="buttons">
+        <a class="button primary" href="#explore">Explore the hub ↗</a>
+        <a class="button secondary" href="#about">About AstraHub</a>
+      </div>
+    </section>
+
+    <section id="explore">
+      <h2 class="section-title">Explore AstraHub</h2>
+
+      <div class="cards">
+        <a class="card" href="#giveaways">
+          <div class="icon">🎁</div>
+          <h3>Giveaways</h3>
+          <p>Giveaway announcements, entry forms, and rules will live here.</p>
+        </a>
+
+        <a class="card" href="#projects">
+          <div class="icon">🛠️</div>
+          <h3>My Projects</h3>
+          <p>A home for the things I build, create, mod, and experiment with.</p>
+        </a>
+
+        <a class="card" href="#downloads">
+          <div class="icon">📦</div>
+          <h3>Downloads</h3>
+          <p>Find downloads and resources for projects I choose to publish.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="info-section" id="giveaways">
+      <h2 class="section-title">🎁 Giveaways</h2>
+      <p>
+        The giveaway area is coming soon. Check back here for announcements
+        and entry details.
+      </p>
+    </section>
+
+    <section class="info-section" id="projects">
+      <h2 class="section-title">🛠️ Projects</h2>
+      <p>
+        This is where my projects will be showcased as the hub grows.
+      </p>
+    </section>
+
+    <section class="info-section" id="downloads">
+      <h2 class="section-title">📦 Downloads</h2>
+      <p>
+        Downloads will appear here when projects are ready to share.
+      </p>
+    </section>
+
+    <section class="info-section" id="about" style="padding-bottom: 80px;">
+      <h2 class="section-title">About AstraHub</h2>
+      <p>
+        AstraHub is my personal online hub — a place to bring my projects
+        and creations together in one place.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> _AstraHub · Built one project at a time.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
