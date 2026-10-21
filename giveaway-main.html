@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101020">
+  <title>Giveaways | _AstraHub</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #f4f0ff;
+      background: linear-gradient(135deg, #101020, #21123b);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 8%;
+      border-bottom: 1px solid #302448;
+      background: rgba(12, 10, 25, 0.8);
+    }
+
+    .logo {
+      color: white;
+      font-size: 25px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #a970ff;
+    }
+
+    nav {
+      display: flex;
+      gap: 24px;
+    }
+
+    nav a {
+      color: #c7bfdc;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: #bd94ff;
+    }
+
+    main {
+      width: min(900px, 88%);
+      margin: 0 auto;
+      padding: 90px 0;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 15px;
+      margin-bottom: 24px;
+      color: #d7bdff;
+      background: #211536;
+      border: 1px solid #533779;
+      border-radius: 30px;
+      font-size: 13px;
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      font-size: clamp(42px, 8vw, 68px);
+      letter-spacing: -2px;
+    }
+
+    h1 span {
+      color: #b184ff;
+    }
+
+    .intro {
+      max-width: 620px;
+      margin: 0 auto;
+      color: #b9b3ca;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 38px;
+    }
+
+    .button {
+      display: inline-block;
+      min-width: 210px;
+      padding: 16px 24px;
+      border: 1px solid #8653ce;
+      border-radius: 12px;
+      color: white;
+      background: #814be0;
+      font-weight: bold;
+      text-decoration: none;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      background: #995ff2;
+    }
+
+    .button.secondary {
+      background: #211936;
+      border-color: #584078;
+    }
+
+    .button.secondary:hover {
+      background: #302249;
+    }
+
+    .info {
+      margin-top: 55px;
+      padding: 24px;
+      border: 1px solid #34254f;
+      border-radius: 16px;
+      background: rgba(18, 14, 33, 0.75);
+    }
+
+    .info h2 {
+      margin-top: 0;
+    }
+
+    .info p {
+      margin-bottom: 0;
+      color: #aaa4bd;
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 25px;
+      border-top: 1px solid #302448;
+      color: #77718b;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 18px 6%;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      nav {
+        gap: 16px;
+      }
+
+      main {
+        padding: 65px 0;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">_<span>Astra</span>Hub</a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="badge">✦ _ASTRAHUB GIVEAWAYS</div>
+
+    <h1>Enter. <span>Win.</span> Enjoy.</h1>
+
+    <p class="intro">
+      Welcome to the _AstraHub giveaway centre!
+      Check the current giveaway status or head straight
+      to the entry form.
+    </p>
+
+    <div class="buttons">
+      <a class="button secondary" href="giveaway-status.html">
+        📊 View Giveaway Status
+      </a>
+
+      <a class="button" href="giveaway.html">
+        🎁 Enter Giveaway →
+      </a>
+    </div>
+
+    <section class="info">
+      <h2>Before you enter</h2>
+      <p>
+        Read the giveaway rules on the entry form and make sure
+        your details are correct before submitting your entry.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> _AstraHub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+</body>
+</html>
