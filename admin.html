@@ -191,6 +191,50 @@
     <section class="panel hidden" id="admin-panel">
       <h1>🎁 Giveaway Entries</h1>
       <p>Review submissions and manually decide who is eligible.</p>
+      <section class="panel" id="giveaway-settings">
+  <h2>⚙️ Giveaway Settings</h2>
+  <p>Manage the prize, entry status, and winner announcement.</p>
+
+  <form id="settings-form">
+    <label for="prize-name">Prize name</label>
+    <input id="prize-name" type="text" maxlength="150"
+           placeholder="e.g. £10 Gift Card" required>
+
+    <label for="prize-description">Prize description</label>
+    <input id="prize-description" type="text" maxlength="1000"
+           placeholder="Describe the prize" required>
+
+    <label for="prize-image-url">Prize image URL (optional)</label>
+    <input id="prize-image-url" type="url"
+           placeholder="https://example.com/prize.png">
+
+    <label for="giveaway-open">Entry status</label>
+    <select id="giveaway-open">
+      <option value="true">Open</option>
+      <option value="false">Closed</option>
+    </select>
+
+    <h2 style="margin-top:28px">🏆 Winner Announcement</h2>
+
+    <label for="winner-username">Winner's username</label>
+    <input id="winner-username" type="text" maxlength="150"
+           placeholder="Winning username">
+
+    <label for="winner-prize">Prize awarded</label>
+    <input id="winner-prize" type="text" maxlength="150"
+           placeholder="Prize the winner receives">
+
+    <label>
+      <input id="announcement-published" type="checkbox"
+             style="width:auto">
+      Publish winner announcement publicly
+    </label>
+
+    <button id="save-settings-button" type="submit">
+      Save Giveaway Settings
+    </button>
+  </form>
+</section>
 
       <div class="toolbar">
         <button id="refresh-button" class="secondary">
