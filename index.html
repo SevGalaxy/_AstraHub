@@ -210,7 +210,9 @@
 
 <body>
   <header>
-    <div class="logo">_<span>Astra</span>Hub</div>
+    <div class="logo" id="secret-admin-trigger" title="_AstraHub">
+  _<span>Astra</span>Hub
+</div>
 
     <nav>
       <a href="#home">Home</a>
@@ -296,7 +298,15 @@
   </footer>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  const adminTrigger = document.getElementById("secret-admin-trigger");
+
+  adminTrigger.addEventListener("click", function (event) {
+    if (event.detail === 3) {
+      window.location.href = "admin.html";
+    }
+  });
+</script>
 </body>
 </html>
