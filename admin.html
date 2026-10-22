@@ -495,7 +495,8 @@
         return;
       }
 
-      showLoggedIn();
+            showLoggedIn();
+      await loadSettings();
       await loadEntries();
     });
 
@@ -552,7 +553,8 @@
       }
 
       if (data.session) {
-        showLoggedIn();
+                showLoggedIn();
+        await loadSettings();
         await loadEntries();
       } else {
         showLoggedOut();
