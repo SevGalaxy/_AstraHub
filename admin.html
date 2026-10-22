@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -171,17 +172,21 @@
       filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.4));
     }
 
+    /*
+      The triangle now points DOWN into the wheel.
+      Its tip marks the winning slice at the top.
+    */
     .wheel-pointer {
       position: absolute;
       z-index: 2;
-      top: -8px;
+      top: -7px;
       left: 50%;
       width: 0;
       height: 0;
       transform: translateX(-50%);
       border-left: 17px solid transparent;
       border-right: 17px solid transparent;
-      border-bottom: 34px solid white;
+      border-top: 34px solid white;
       filter: drop-shadow(0 2px 4px #00000088);
     }
 
@@ -254,6 +259,7 @@
       }
     }
   </style>
+
 </head>
 
 <body>
@@ -267,205 +273,209 @@
       <h1>🔐 Admin Login</h1>
       <p>Sign in with your private AstraHub admin account.</p>
 
-      <form id="login-form">
-        <label for="email">Admin email</label>
-        <input
-          id="email"
-          type="email"
-          autocomplete="username"
-          required
-        >
+```
+  <form id="login-form">
+    <label for="email">Admin email</label>
+    <input
+      id="email"
+      type="email"
+      autocomplete="username"
+      required
+    >
 
-        <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          autocomplete="current-password"
-          required
-        >
+    <label for="password">Password</label>
+    <input
+      id="password"
+      type="password"
+      autocomplete="current-password"
+      required
+    >
 
-        <button id="login-button" type="submit">Sign In</button>
-      </form>
-    </section>
+    <button id="login-button" type="submit">Sign In</button>
+  </form>
+</section>
 
-    <!-- ADMIN PANEL -->
-    <section class="panel hidden" id="admin-panel">
-      <h1>🎁 Giveaway Entries</h1>
-      <p>Review submissions and manually decide who is eligible.</p>
+<!-- ADMIN PANEL -->
+<section class="panel hidden" id="admin-panel">
+  <h1>🎁 Giveaway Entries</h1>
+  <p>Review submissions and manually decide who is eligible.</p>
 
-      <!-- GIVEAWAY SETTINGS -->
-      <section class="panel" id="giveaway-settings">
-        <h2>⚙️ Giveaway Settings</h2>
-        <p>Manage the prize, entry status, and winner announcement.</p>
+  <!-- GIVEAWAY SETTINGS -->
+  <section class="panel" id="giveaway-settings">
+    <h2>⚙️ Giveaway Settings</h2>
+    <p>Manage the prize, entry status, and winner announcement.</p>
 
-        <form id="settings-form">
-          <label for="prize-name">Prize name</label>
-          <input
-            id="prize-name"
-            type="text"
-            maxlength="150"
-            placeholder="e.g. £10 Gift Card"
-            required
-          >
+    <form id="settings-form">
+      <label for="prize-name">Prize name</label>
+      <input
+        id="prize-name"
+        type="text"
+        maxlength="150"
+        placeholder="e.g. £10 Gift Card"
+        required
+      >
 
-          <label for="prize-description">Prize description</label>
-          <input
-            id="prize-description"
-            type="text"
-            maxlength="1000"
-            placeholder="Describe the prize"
-            required
-          >
+      <label for="prize-description">Prize description</label>
+      <input
+        id="prize-description"
+        type="text"
+        maxlength="1000"
+        placeholder="Describe the prize"
+        required
+      >
 
-          <label for="prize-image-url">Prize image URL (optional)</label>
-          <input
-            id="prize-image-url"
-            type="url"
-            placeholder="https://example.com/prize.png"
-          >
+      <label for="prize-image-url">Prize image URL (optional)</label>
+      <input
+        id="prize-image-url"
+        type="url"
+        placeholder="https://example.com/prize.png"
+      >
 
-          <label for="giveaway-open">Entry status</label>
-          <select id="giveaway-open">
-            <option value="true">Open</option>
-            <option value="false">Closed</option>
-          </select>
+      <label for="giveaway-open">Entry status</label>
+      <select id="giveaway-open">
+        <option value="true">Open</option>
+        <option value="false">Closed</option>
+      </select>
 
-          <h2 style="margin-top:28px">🏆 Winner Announcement</h2>
+      <h2 style="margin-top:28px">🏆 Winner Announcement</h2>
 
-          <label for="winner-username">Winner's username</label>
-          <input
-            id="winner-username"
-            type="text"
-            maxlength="150"
-            placeholder="Winning username"
-          >
+      <label for="winner-username">Winner's username</label>
+      <input
+        id="winner-username"
+        type="text"
+        maxlength="150"
+        placeholder="Winning username"
+      >
 
-          <label for="winner-prize">Prize awarded</label>
-          <input
-            id="winner-prize"
-            type="text"
-            maxlength="150"
-            placeholder="Prize the winner receives"
-          >
+      <label for="winner-prize">Prize awarded</label>
+      <input
+        id="winner-prize"
+        type="text"
+        maxlength="150"
+        placeholder="Prize the winner receives"
+      >
 
-          <label>
-            <input id="announcement-published" type="checkbox">
-            Publish winner announcement publicly
-          </label>
+      <label>
+        <input id="announcement-published" type="checkbox">
+        Publish winner announcement publicly
+      </label>
 
-          <button id="save-settings-button" type="submit">
-            Save Giveaway Settings
-          </button>
-        </form>
-      </section>
+      <button id="save-settings-button" type="submit">
+        Save Giveaway Settings
+      </button>
+    </form>
+  </section>
 
-      <!-- WINNER WHEEL -->
-      <section class="panel wheel-panel" id="giveaway-wheel-panel">
-        <h2>🎡 Giveaway Winner Wheel</h2>
-        <p>
-          Load eligible entries and spin the wheel to choose a winner.
-        </p>
+  <!-- WINNER WHEEL -->
+  <section class="panel wheel-panel" id="giveaway-wheel-panel">
+    <h2>🎡 Giveaway Winner Wheel</h2>
+    <p>
+      Load eligible entries and spin the wheel to choose a winner.
+    </p>
 
-        <div class="wheel-container">
-          <div class="wheel-pointer" aria-hidden="true"></div>
+    <div class="wheel-container">
+      <div class="wheel-pointer" aria-hidden="true"></div>
 
-          <canvas
-            id="winner-wheel"
-            width="600"
-            height="600"
-            aria-label="Wheel containing eligible giveaway entrants"
-          ></canvas>
-        </div>
+      <canvas
+        id="winner-wheel"
+        width="600"
+        height="600"
+        aria-label="Wheel containing eligible giveaway entrants"
+      ></canvas>
+    </div>
 
-        <p id="wheel-count">Load eligible entries to begin.</p>
+    <p id="wheel-count">Load eligible entries to begin.</p>
 
-        <div class="wheel-buttons">
-          <button id="load-wheel-button" type="button">
-            Load Eligible Entries
-          </button>
+    <div class="wheel-buttons">
+      <button id="load-wheel-button" type="button">
+        Load Eligible Entries
+      </button>
 
-          <button
-            id="spin-wheel-button"
-            type="button"
-            disabled
-          >
-            🎡 Spin the Wheel!
-          </button>
-        </div>
+      <button
+        id="spin-wheel-button"
+        type="button"
+        disabled
+      >
+        🎡 Spin the Wheel!
+      </button>
+    </div>
 
-        <div id="wheel-result" aria-live="polite">
-          <h3>🏆 Winner</h3>
-          <p id="wheel-winner-name">No winner selected yet.</p>
-          <p id="wheel-result-note" class="small">
-            Load eligible entries to begin.
-          </p>
-        </div>
-
-        <details class="eligible-list">
-          <summary>View eligible usernames</summary>
-          <ol id="eligible-preview">
-            <li>Load eligible entries to see the list.</li>
-          </ol>
-        </details>
-
-        <p class="small">
-          The winner is identified from the wheel's final position.
-          The result is not automatically saved or published.
-        </p>
-      </section>
-
-      <!-- ENTRY MANAGEMENT -->
-      <div class="toolbar">
-        <button
-          id="refresh-button"
-          class="secondary"
-          type="button"
-        >
-          Refresh Entries
-        </button>
-
-        <button id="copy-button" type="button">
-          Copy Eligible Usernames
-        </button>
-
-        <button
-          id="logout-button"
-          class="secondary"
-          type="button"
-        >
-          Sign Out
-        </button>
-      </div>
-
-      <p id="count"></p>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Entrant</th>
-              <th>Prize Username</th>
-              <th>Knows Host</th>
-              <th>Accepted Rules</th>
-              <th>Submitted</th>
-              <th>Eligibility</th>
-            </tr>
-          </thead>
-
-          <tbody id="entries-body"></tbody>
-        </table>
-      </div>
-
-      <p class="small">
-        Check each entry before marking it eligible. Only entries marked
-        eligible are included in the wheel.
+    <div id="wheel-result" aria-live="polite">
+      <h3>🏆 Winner</h3>
+      <p id="wheel-winner-name">No winner selected yet.</p>
+      <p id="wheel-result-note" class="small">
+        Load eligible entries to begin.
       </p>
-    </section>
+    </div>
 
-    <p id="message" role="status" aria-live="polite"></p>
+    <details class="eligible-list">
+      <summary>View eligible usernames</summary>
+      <ol id="eligible-preview">
+        <li>Load eligible entries to see the list.</li>
+      </ol>
+    </details>
+
+    <p class="small">
+      The winner is identified from the wheel's final position.
+      The result is not automatically saved or published.
+    </p>
+  </section>
+
+  <!-- ENTRY MANAGEMENT -->
+  <div class="toolbar">
+    <button
+      id="refresh-button"
+      class="secondary"
+      type="button"
+    >
+      Refresh Entries
+    </button>
+
+    <button id="copy-button" type="button">
+      Copy Eligible Usernames
+    </button>
+
+    <button
+      id="logout-button"
+      class="secondary"
+      type="button"
+    >
+      Sign Out
+    </button>
+  </div>
+
+  <p id="count"></p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Entrant</th>
+          <th>Prize Username</th>
+          <th>Knows Host</th>
+          <th>Accepted Rules</th>
+          <th>Submitted</th>
+          <th>Eligibility</th>
+        </tr>
+      </thead>
+
+      <tbody id="entries-body"></tbody>
+    </table>
+  </div>
+
+  <p class="small">
+    Check each entry before marking it eligible. Only entries marked
+    eligible are included in the wheel.
+  </p>
+</section>
+
+<p id="message" role="status" aria-live="polite"></p>
+```
+
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script src="config.js"></script>
 
   <script>
@@ -506,14 +516,13 @@
     const eligiblePreview = document.getElementById("eligible-preview");
 
     let entries = [];
-
-    // Wheel state
     let wheelEntries = [];
     let wheelRotation = 0;
     let isSpinning = false;
     let wheelHasLoadedEntries = false;
 
     const FULL_TURN = Math.PI * 2;
+    const POINTER_ANGLE = -Math.PI / 2;
 
     const WHEEL_COLOURS = [
       "#814be0",
@@ -534,6 +543,35 @@
 
     function normaliseAngle(angle) {
       return ((angle % FULL_TURN) + FULL_TURN) % FULL_TURN;
+    }
+
+    /*
+      This is the SINGLE source of truth for the winner.
+
+      The first slice begins at wheelRotation - PI/2.
+      Every following slice begins one slice-width later.
+      We calculate the angle underneath the pointer relative
+      to that first slice, then identify which slice contains it.
+    */
+    function getWinningIndex(finalRotation) {
+      if (wheelEntries.length === 0) {
+        return -1;
+      }
+
+      const slice = FULL_TURN / wheelEntries.length;
+
+      const firstSliceStart = finalRotation + POINTER_ANGLE;
+
+      const pointerAngleOnWheel = normaliseAngle(
+        POINTER_ANGLE - firstSliceStart
+      );
+
+      const index = Math.floor(pointerAngleOnWheel / slice);
+
+      return Math.max(
+        0,
+        Math.min(wheelEntries.length - 1, index)
+      );
     }
 
     // --------------------------------------------------
@@ -696,7 +734,6 @@
             entry.review_status = newStatus;
             showMessage("Entry status updated.");
 
-            // Eligibility changes invalidate the wheel's loaded list.
             wheelHasLoadedEntries = false;
             spinWheelButton.disabled = true;
             wheelCount.textContent =
@@ -767,10 +804,9 @@
 
       wheelEntries.forEach((entry, index) => {
         const startAngle =
-          wheelRotation + index * slice - Math.PI / 2;
+          wheelRotation + POINTER_ANGLE + index * slice;
         const endAngle = startAngle + slice;
 
-        // Slice
         ctx.beginPath();
         ctx.moveTo(0, 0);
         ctx.arc(0, 0, radius, startAngle, endAngle);
@@ -784,7 +820,7 @@
         ctx.strokeStyle = "#17132b";
         ctx.stroke();
 
-        // Label
+        // Draw the username inside its corresponding slice.
         ctx.save();
 
         const middleAngle = startAngle + slice / 2;
@@ -799,8 +835,7 @@
           entry.entrant_name ||
           "Unknown";
 
-        const maxLength =
-          wheelEntries.length > 18 ? 12 : 20;
+        const maxLength = wheelEntries.length > 18 ? 12 : 20;
 
         const displayLabel = label.length > maxLength
           ? label.slice(0, maxLength - 1) + "…"
@@ -862,6 +897,7 @@
           wheelEntries = [];
           wheelHasLoadedEntries = false;
           drawWheel();
+          renderEligiblePreview();
 
           wheelCount.textContent = "Couldn't load eligible entries.";
           wheelResultNote.textContent = error.message;
@@ -897,7 +933,7 @@
           `${wheelEntries.length} eligible entr${wheelEntries.length === 1 ? "y" : "ies"} loaded.`;
 
         wheelResultNote.textContent =
-          "Ready to spin. The wheel will determine the winner.";
+          "Ready to spin. The pointer determines the winner.";
 
         spinWheelButton.disabled = false;
 
@@ -940,7 +976,7 @@
 
     // --------------------------------------------------
     // SPIN WHEEL
-    // THE FINAL WHEEL POSITION DETERMINES THE WINNER.
+    // THE FINAL POSITION UNDER THE POINTER WINS.
     // --------------------------------------------------
 
     function spinWheel() {
@@ -960,10 +996,9 @@
       wheelResultNote.textContent = "Good luck to everyone!";
       showMessage("The giveaway wheel is spinning...");
 
-      const slice = FULL_TURN / wheelEntries.length;
       const startRotation = wheelRotation;
 
-      // The final angle is random. No winner is selected beforehand.
+      // Randomise the final rotation, not the winner.
       const extraTurns = 5 + Math.floor(Math.random() * 4);
       const randomOffset = Math.random() * FULL_TURN;
 
@@ -994,36 +1029,30 @@
         }
 
         /*
-          Freeze the wheel at its final angle before identifying
-          the winner. Both drawing and winner detection use this
-          exact wheelRotation value.
+          Lock the wheel at the exact final angle and redraw it.
+          Winner detection uses this exact same angle.
         */
         wheelRotation = targetRotation;
         drawWheel();
 
         /*
-          IMPORTANT ANGLE CALCULATION
-
-          A slice starts at:
-            wheelRotation + index * slice - PI/2
-
-          The pointer points straight up at:
-            -PI/2
-
-          Therefore the pointer's local angle on the wheel is:
-            normalise(-wheelRotation)
-
-          The slice containing that angle is the winner.
+          Determine the winning index from the pointer angle
+          and the same slice boundaries used by drawWheel().
+          No separate random winner is selected.
         */
-        const pointerLocalAngle =
-          normaliseAngle(-wheelRotation);
+        const winningIndex = getWinningIndex(wheelRotation);
 
-        const winningIndex = Math.min(
-          wheelEntries.length - 1,
-          Math.floor(pointerLocalAngle / slice)
-        );
+        if (winningIndex < 0) {
+          wheelResultName.textContent = "No winner selected.";
+          wheelResultNote.textContent = "Reload eligible entries and try again.";
+          showMessage("The wheel has no eligible entries.");
 
-        // The winner comes from the slice physically under the pointer.
+          isSpinning = false;
+          loadWheelButton.disabled = false;
+          spinWheelButton.disabled = true;
+          return;
+        }
+
         const winner = wheelEntries[winningIndex];
 
         const winningUsername =
@@ -1031,12 +1060,11 @@
           (winner.entrant_name || "").trim() ||
           "Unknown";
 
-        // Display the username belonging to the actual winning slice.
         wheelResultName.textContent = winningUsername;
         wheelResultNote.textContent =
-          "Winner identified from the wheel's final position.";
+          `Winning slice ${winningIndex + 1} of ${wheelEntries.length}. Selected from the final wheel position.`;
 
-        // Fill the announcement form without automatically saving it.
+        // Fill the announcement form, but do not save automatically.
         winnerUsernameInput.value = winningUsername;
 
         if (!winnerPrizeInput.value.trim()) {
@@ -1055,15 +1083,8 @@
       requestAnimationFrame(animate);
     }
 
-    loadWheelButton.addEventListener(
-      "click",
-      loadWheelEntries
-    );
-
-    spinWheelButton.addEventListener(
-      "click",
-      spinWheel
-    );
+    loadWheelButton.addEventListener("click", loadWheelEntries);
+    spinWheelButton.addEventListener("click", spinWheel);
 
     // --------------------------------------------------
     // LOGIN
@@ -1214,5 +1235,6 @@
     drawWheel();
     checkSession();
   </script>
+
 </body>
 </html>
