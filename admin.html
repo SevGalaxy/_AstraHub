@@ -296,6 +296,73 @@
     const count = document.getElementById("count");
 
     let entries = [];
+        // Giveaway settings elements
+    const settingsForm = document.getElementById("settings-form");
+    const prizeNameInput = document.getElementById("prize-name");
+    const prizeDescriptionInput = document.getElementById("prize-description");
+    const prizeImageInput = document.getElementById("prize-image-url");
+    const giveawayOpenInput = document.getElementById("giveaway-open");
+    const winnerUsernameInput = document.getElementById("winner-username");
+    const winnerPrizeInput = document.getElementById("winner-prize");
+    const announcementPublishedInput = document.getElementById("announcement-published");
+    const saveSettingsButton = document.getElementById("save-settings-button");
+
+    // Load the saved settings from Supabase
+    async function loadSettings() {
+      const { data, error } = await client
+        .from("giveaway_settings")
+        .select("*")
+        .eq("id", 1)
+        .single();
+
+      if (error) {
+        console.error(error);
+        showMessage("Couldn't load giveaway settings.");
+        return;
+      }
+
+      prizeNameInput.value = data.prize_name || "";
+      prizeDescriptionInput.value = data.prize_description || "";
+      prizeImageInput.value = data.prize_image_url || "";
+      giveawayOpenInput.value = String(data.giveaway_open);
+      winnerUsernameInput.value = data.winner_username || "";
+      winnerPrizeInput.value = data.winner_prize || "";
+      announcementPublishedInput.checked = data.announcement_published;
+    }
+
+    // Save settings to Supabase
+    settingsForm.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      saveSettingsButton.disabled = true;
+      showMessage("Saving giveaway settings...");
+
+      const settings = {
+        prize_name: prizeNameInput.value.trim(),
+        prize_description: prizeDescriptionInput.value.trim(),
+        prize_image_url: prizeImageInput.value.trim(),
+        giveaway_open: giveawayOpenInput.value === "true",
+        winner_username: winnerUsernameInput.value.trim(),
+        winner_prize: winnerPrizeInput.value.trim(),
+        announcement_published: announcementPublishedInput.checked,
+        updated_at: new Date().toISOString()
+      };
+
+      const { error } = await client
+        .from("giveaway_settings")
+        .update(settings)
+        .eq("id", 1);
+
+      saveSettingsButton.disabled = false;
+
+      if (error) {
+        console.error(error);
+        showMessage("Couldn't save settings. Check your admin login and Supabase permissions.");
+        return;
+      }
+
+      showMessage("✅ Giveaway settings saved successfully!");
+    });
 
     function showMessage(text) {
       message.textContent = text;
