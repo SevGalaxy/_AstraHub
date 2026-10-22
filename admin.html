@@ -7,7 +7,9 @@
   <title>Admin Panel | _AstraHub</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -18,9 +20,23 @@
       background: linear-gradient(135deg, #101020, #21123b);
     }
 
-    header, main { max-width: 1050px; margin: 0 auto; }
-    header { margin-bottom: 32px; }
-    a { color: #c9a5ff; text-decoration: none; }
+    header, main {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 32px;
+    }
+
+    a {
+      color: #c9a5ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
 
     .panel {
       padding: 28px;
@@ -30,11 +46,21 @@
       border-radius: 16px;
     }
 
-    h1, h2 { margin-top: 0; }
-    p { color: #c7bfdc; line-height: 1.5; }
-    label { display: block; margin: 16px 0 8px; }
+    h1, h2, h3 {
+      margin-top: 0;
+    }
 
-    input {
+    p {
+      color: #c7bfdc;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 8px;
+    }
+
+    input:not([type="checkbox"]) {
       width: 100%;
       padding: 12px;
       color: white;
@@ -42,6 +68,11 @@
       border: 1px solid #58447a;
       border-radius: 8px;
       font-size: 1rem;
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+      margin-right: 8px;
     }
 
     button, select {
@@ -58,9 +89,23 @@
       cursor: pointer;
     }
 
-    button:disabled { opacity: 0.6; cursor: wait; }
-    button.secondary { background: #38304f; }
-    #login-button { width: 100%; margin-top: 20px; }
+    button:hover:not(:disabled) {
+      filter: brightness(1.12);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    button.secondary {
+      background: #38304f;
+    }
+
+    #login-button {
+      width: 100%;
+      margin-top: 20px;
+    }
 
     .toolbar {
       display: flex;
@@ -69,8 +114,15 @@
       margin: 20px 0;
     }
 
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
 
     th, td {
       padding: 12px;
@@ -79,7 +131,9 @@
       vertical-align: top;
     }
 
-    th { color: #d7c3ff; }
+    th {
+      color: #d7c3ff;
+    }
 
     td select {
       color: white;
@@ -87,105 +141,117 @@
       border: 1px solid #58447a;
     }
 
-    #message { overflow-wrap: anywhere; }
-    .hidden { display: none !important; }
-    .small { font-size: 0.85rem; }
-
-    /* Giveaway wheel */
-    .wheel-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(250px, 0.8fr);
-      gap: 24px;
-      align-items: center;
+    #message {
+      overflow-wrap: anywhere;
     }
 
-    .wheel-stage {
+    .hidden {
+      display: none !important;
+    }
+
+    .small {
+      font-size: 0.85rem;
+    }
+
+    .wheel-panel {
+      text-align: center;
+    }
+
+    .wheel-container {
       position: relative;
-      width: min(100%, 420px);
-      margin: 8px auto;
-      aspect-ratio: 1;
+      width: min(100%, 440px);
+      margin: 24px auto;
     }
 
     #winner-wheel {
       display: block;
       width: 100%;
-      height: 100%;
-      filter: drop-shadow(0 8px 18px #0007);
+      height: auto;
+      border-radius: 50%;
+      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.4));
     }
 
     .wheel-pointer {
       position: absolute;
       z-index: 2;
-      top: -4px;
+      top: -8px;
       left: 50%;
-      transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 16px solid transparent;
-      border-right: 16px solid transparent;
-      border-top: 32px solid white;
-      filter: drop-shadow(0 2px 3px #0009);
+      transform: translateX(-50%);
+      border-left: 17px solid transparent;
+      border-right: 17px solid transparent;
+      border-bottom: 34px solid white;
+      filter: drop-shadow(0 2px 4px #00000088);
     }
 
-    .wheel-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 66px;
-      height: 66px;
-      display: grid;
-      place-items: center;
-      border: 4px solid #e6d8ff;
-      border-radius: 50%;
-      background: #24163e;
-      color: white;
-      font-weight: bold;
-      box-shadow: 0 3px 10px #0007;
-      pointer-events: none;
-    }
-
-    .wheel-controls {
-      display: grid;
+    .wheel-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 10px;
+      margin: 18px 0;
     }
 
-    .wheel-controls button { width: 100%; }
+    #wheel-count {
+      margin: 12px 0;
+      font-weight: bold;
+    }
 
-    #wheel-status {
-      min-height: 48px;
-      padding: 12px;
-      border-radius: 10px;
+    #wheel-result {
+      margin-top: 20px;
+      padding: 18px;
       background: #100d20;
-      overflow-wrap: anywhere;
-    }
-
-    #winner-result {
-      margin-top: 12px;
-      padding: 16px;
-      border: 1px solid #9a6aff;
+      border: 1px solid #58447a;
       border-radius: 12px;
-      background: #25173e;
       overflow-wrap: anywhere;
     }
 
-    #winner-result strong {
-      color: #e2ccff;
-      font-size: 1.25rem;
+    #wheel-result h3 {
+      margin-bottom: 8px;
+      color: #d7c3ff;
+    }
+
+    #wheel-winner-name {
+      margin: 0;
+      color: white;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: bold;
+    }
+
+    .eligible-list {
+      max-width: 600px;
+      margin: 20px auto 0;
+      padding: 14px;
+      text-align: left;
+      background: #100d20;
+      border-radius: 10px;
+    }
+
+    .eligible-list summary {
+      cursor: pointer;
+      color: #d7c3ff;
+      font-weight: bold;
     }
 
     #eligible-preview {
-      max-height: 180px;
-      overflow: auto;
       padding-left: 22px;
+      overflow-wrap: anywhere;
+    }
+
+    #eligible-preview li {
+      margin: 7px 0;
       color: #c7bfdc;
     }
 
-    @media (max-width: 760px) {
-      body { padding: 14px; }
-      .panel { padding: 18px; }
-      .wheel-layout { grid-template-columns: 1fr; }
-      .wheel-stage { width: min(100%, 360px); }
+    @media (max-width: 600px) {
+      body {
+        padding: 14px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
     }
   </style>
 </head>
@@ -196,41 +262,67 @@
   </header>
 
   <main>
+    <!-- ADMIN LOGIN -->
     <section class="panel" id="login-panel">
       <h1>🔐 Admin Login</h1>
       <p>Sign in with your private AstraHub admin account.</p>
 
       <form id="login-form">
         <label for="email">Admin email</label>
-        <input id="email" type="email" autocomplete="username" required>
+        <input
+          id="email"
+          type="email"
+          autocomplete="username"
+          required
+        >
 
         <label for="password">Password</label>
-        <input id="password" type="password" autocomplete="current-password" required>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          required
+        >
 
         <button id="login-button" type="submit">Sign In</button>
       </form>
     </section>
 
+    <!-- ADMIN PANEL -->
     <section class="panel hidden" id="admin-panel">
       <h1>🎁 Giveaway Entries</h1>
       <p>Review submissions and manually decide who is eligible.</p>
 
+      <!-- GIVEAWAY SETTINGS -->
       <section class="panel" id="giveaway-settings">
         <h2>⚙️ Giveaway Settings</h2>
         <p>Manage the prize, entry status, and winner announcement.</p>
 
         <form id="settings-form">
           <label for="prize-name">Prize name</label>
-          <input id="prize-name" type="text" maxlength="150"
-            placeholder="e.g. £10 Gift Card" required>
+          <input
+            id="prize-name"
+            type="text"
+            maxlength="150"
+            placeholder="e.g. £10 Gift Card"
+            required
+          >
 
           <label for="prize-description">Prize description</label>
-          <input id="prize-description" type="text" maxlength="1000"
-            placeholder="Describe the prize" required>
+          <input
+            id="prize-description"
+            type="text"
+            maxlength="1000"
+            placeholder="Describe the prize"
+            required
+          >
 
           <label for="prize-image-url">Prize image URL (optional)</label>
-          <input id="prize-image-url" type="url"
-            placeholder="https://example.com/prize.png">
+          <input
+            id="prize-image-url"
+            type="url"
+            placeholder="https://example.com/prize.png"
+          >
 
           <label for="giveaway-open">Entry status</label>
           <select id="giveaway-open">
@@ -241,15 +333,23 @@
           <h2 style="margin-top:28px">🏆 Winner Announcement</h2>
 
           <label for="winner-username">Winner's username</label>
-          <input id="winner-username" type="text" maxlength="150"
-            placeholder="Winning username">
+          <input
+            id="winner-username"
+            type="text"
+            maxlength="150"
+            placeholder="Winning username"
+          >
 
           <label for="winner-prize">Prize awarded</label>
-          <input id="winner-prize" type="text" maxlength="150"
-            placeholder="Prize the winner receives">
+          <input
+            id="winner-prize"
+            type="text"
+            maxlength="150"
+            placeholder="Prize the winner receives"
+          >
 
           <label>
-            <input id="announcement-published" type="checkbox" style="width:auto">
+            <input id="announcement-published" type="checkbox">
             Publish winner announcement publicly
           </label>
 
@@ -259,60 +359,80 @@
         </form>
       </section>
 
-      <!-- Giveaway wheel -->
-      <section class="panel" id="giveaway-wheel-panel">
-        <h2>🎡 Eligible Entrant Wheel</h2>
+      <!-- WINNER WHEEL -->
+      <section class="panel wheel-panel" id="giveaway-wheel-panel">
+        <h2>🎡 Giveaway Winner Wheel</h2>
         <p>
-          Load entries marked <strong>Eligible</strong>, then spin to pick a winner.
-          Only eligible entries are included.
+          Load eligible entries and spin the wheel to choose a winner.
         </p>
 
-        <div class="wheel-layout">
-          <div>
-            <div class="wheel-stage">
-              <div class="wheel-pointer" aria-hidden="true"></div>
-              <canvas id="winner-wheel" width="600" height="600"
-                aria-label="Wheel containing eligible giveaway entrants"></canvas>
-              <div class="wheel-center" aria-hidden="true">SPIN</div>
-            </div>
-          </div>
+        <div class="wheel-container">
+          <div class="wheel-pointer" aria-hidden="true"></div>
 
-          <div class="wheel-controls">
-            <button id="load-wheel-button" type="button">
-              Load Eligible Entries
-            </button>
-
-            <button id="spin-wheel-button" type="button" disabled>
-              🎡 Spin the Wheel!
-            </button>
-
-            <p id="wheel-status" role="status" aria-live="polite">
-              Load eligible entries to prepare the wheel.
-            </p>
-
-            <div id="winner-result" class="hidden" aria-live="polite"></div>
-
-            <h3>Eligible entries (<span id="wheel-entry-count">0</span>)</h3>
-            <ul id="eligible-preview">
-              <li>No entries loaded yet.</li>
-            </ul>
-
-            <p class="small">
-              Refresh the wheel before a draw to include recent eligibility changes.
-              Spinning does not automatically publish the winner.
-            </p>
-          </div>
+          <canvas
+            id="winner-wheel"
+            width="600"
+            height="600"
+            aria-label="Wheel containing eligible giveaway entrants"
+          ></canvas>
         </div>
+
+        <p id="wheel-count">Load eligible entries to begin.</p>
+
+        <div class="wheel-buttons">
+          <button id="load-wheel-button" type="button">
+            Load Eligible Entries
+          </button>
+
+          <button
+            id="spin-wheel-button"
+            type="button"
+            disabled
+          >
+            🎡 Spin the Wheel!
+          </button>
+        </div>
+
+        <div id="wheel-result" aria-live="polite">
+          <h3>🏆 Winner</h3>
+          <p id="wheel-winner-name">No winner selected yet.</p>
+          <p id="wheel-result-note" class="small">
+            Load eligible entries to begin.
+          </p>
+        </div>
+
+        <details class="eligible-list">
+          <summary>View eligible usernames</summary>
+          <ol id="eligible-preview">
+            <li>Load eligible entries to see the list.</li>
+          </ol>
+        </details>
+
+        <p class="small">
+          The winner is identified from the wheel's final position.
+          The result is not automatically saved or published.
+        </p>
       </section>
 
+      <!-- ENTRY MANAGEMENT -->
       <div class="toolbar">
-        <button id="refresh-button" class="secondary" type="button">
+        <button
+          id="refresh-button"
+          class="secondary"
+          type="button"
+        >
           Refresh Entries
         </button>
+
         <button id="copy-button" type="button">
           Copy Eligible Usernames
         </button>
-        <button id="logout-button" class="secondary" type="button">
+
+        <button
+          id="logout-button"
+          class="secondary"
+          type="button"
+        >
           Sign Out
         </button>
       </div>
@@ -331,13 +451,14 @@
               <th>Eligibility</th>
             </tr>
           </thead>
+
           <tbody id="entries-body"></tbody>
         </table>
       </div>
 
       <p class="small">
-        Check eligibility yourself before marking someone eligible.
-        Only mark entries eligible after you've completed your checks.
+        Check each entry before marking it eligible. Only entries marked
+        eligible are included in the wheel.
       </p>
     </section>
 
@@ -348,15 +469,12 @@
   <script src="config.js"></script>
 
   <script>
+    "use strict";
+
     const client = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_ANON_KEY
     );
-
-    // UI safeguard; Supabase RLS policies must enforce access server-side.
-    const ADMIN_USER_ID = "0ce9ee5f-903f-494a-b3db-c1defd13933e";
-    const IDLE_TIMEOUT_MS = 15 * 60 * 1000;
-    let idleLogoutTimer = null;
 
     const loginPanel = document.getElementById("login-panel");
     const adminPanel = document.getElementById("admin-panel");
@@ -373,55 +491,56 @@
     const giveawayOpenInput = document.getElementById("giveaway-open");
     const winnerUsernameInput = document.getElementById("winner-username");
     const winnerPrizeInput = document.getElementById("winner-prize");
-    const announcementPublishedInput = document.getElementById("announcement-published");
-    const saveSettingsButton = document.getElementById("save-settings-button");
+    const announcementPublishedInput =
+      document.getElementById("announcement-published");
+    const saveSettingsButton =
+      document.getElementById("save-settings-button");
 
-    const loadWheelButton = document.getElementById("load-wheel-button");
-    const spinWheelButton = document.getElementById("spin-wheel-button");
     const wheelCanvas = document.getElementById("winner-wheel");
     const wheelContext = wheelCanvas.getContext("2d");
-    const wheelStatus = document.getElementById("wheel-status");
-    const wheelEntryCount = document.getElementById("wheel-entry-count");
+    const wheelCount = document.getElementById("wheel-count");
+    const wheelResultName = document.getElementById("wheel-winner-name");
+    const wheelResultNote = document.getElementById("wheel-result-note");
+    const loadWheelButton = document.getElementById("load-wheel-button");
+    const spinWheelButton = document.getElementById("spin-wheel-button");
     const eligiblePreview = document.getElementById("eligible-preview");
-    const winnerResult = document.getElementById("winner-result");
 
     let entries = [];
+
+    // Wheel state
     let wheelEntries = [];
     let wheelRotation = 0;
-    let wheelSpinning = false;
+    let isSpinning = false;
+    let wheelHasLoadedEntries = false;
+
+    const FULL_TURN = Math.PI * 2;
+
+    const WHEEL_COLOURS = [
+      "#814be0",
+      "#5032a0",
+      "#b85be8",
+      "#4e78d8",
+      "#d65b9f",
+      "#397f9f",
+      "#a46ad8",
+      "#6b4cc4",
+      "#ce6cba",
+      "#5b58ad"
+    ];
 
     function showMessage(text) {
       message.textContent = text;
     }
 
-    function stopIdleLogoutTimer() {
-      if (idleLogoutTimer !== null) {
-        clearTimeout(idleLogoutTimer);
-        idleLogoutTimer = null;
-      }
+    function normaliseAngle(angle) {
+      return ((angle % FULL_TURN) + FULL_TURN) % FULL_TURN;
     }
 
-    function resetIdleLogoutTimer() {
-      if (adminPanel.classList.contains("hidden")) return;
-
-      stopIdleLogoutTimer();
-
-      idleLogoutTimer = setTimeout(async () => {
-        await client.auth.signOut({ scope: "local" });
-        entries = [];
-        wheelEntries = [];
-        entriesBody.replaceChildren();
-        showLoggedOut();
-        showMessage("You've been signed out after 15 minutes of inactivity.");
-      }, IDLE_TIMEOUT_MS);
-    }
-
-    ["pointerdown", "keydown", "mousemove", "touchstart", "scroll"].forEach(type => {
-      document.addEventListener(type, resetIdleLogoutTimer, { passive: true });
-    });
+    // --------------------------------------------------
+    // LOGIN DISPLAY
+    // --------------------------------------------------
 
     function showLoggedOut() {
-      stopIdleLogoutTimer();
       loginPanel.classList.remove("hidden");
       adminPanel.classList.add("hidden");
     }
@@ -429,41 +548,38 @@
     function showLoggedIn() {
       loginPanel.classList.add("hidden");
       adminPanel.classList.remove("hidden");
-      resetIdleLogoutTimer();
-      drawWheel();
     }
+
+    // --------------------------------------------------
+    // GIVEAWAY SETTINGS
+    // --------------------------------------------------
 
     async function loadSettings() {
       const { data, error } = await client
         .from("giveaway_settings")
-        .select("id, prize_name, prize_description, prize_image_url, giveaway_open, winner_username, winner_prize, announcement_published")
+        .select("*")
         .eq("id", 1)
-        .maybeSingle();
+        .single();
 
       if (error) {
-        console.error("Failed to load giveaway_settings:", error);
-        showMessage(`Couldn't load giveaway settings: ${error.message}`);
-        return false;
+        console.error(error);
+        showMessage("Couldn't load giveaway settings.");
+        return;
       }
 
-      if (!data) {
-        showMessage("No giveaway settings row found. In Supabase, run the INSERT for id = 1.");
-        return false;
-      }
-
-      prizeNameInput.value = data.prize_name ?? "";
-      prizeDescriptionInput.value = data.prize_description ?? "";
-      prizeImageInput.value = data.prize_image_url ?? "";
-      giveawayOpenInput.value = String(data.giveaway_open ?? true);
-      winnerUsernameInput.value = data.winner_username ?? "";
-      winnerPrizeInput.value = data.winner_prize ?? "";
-      announcementPublishedInput.checked = Boolean(data.announcement_published);
-
-      return true;
+      prizeNameInput.value = data.prize_name || "";
+      prizeDescriptionInput.value = data.prize_description || "";
+      prizeImageInput.value = data.prize_image_url || "";
+      giveawayOpenInput.value = String(data.giveaway_open);
+      winnerUsernameInput.value = data.winner_username || "";
+      winnerPrizeInput.value = data.winner_prize || "";
+      announcementPublishedInput.checked =
+        Boolean(data.announcement_published);
     }
 
     settingsForm.addEventListener("submit", async event => {
       event.preventDefault();
+
       saveSettingsButton.disabled = true;
       showMessage("Saving giveaway settings...");
 
@@ -485,19 +601,25 @@
           .eq("id", 1);
 
         if (error) {
-          console.error("Failed to save giveaway_settings:", error);
-          showMessage(`Couldn't save settings: ${error.message}`);
+          console.error(error);
+          showMessage(
+            "Couldn't save settings. Check your admin login and Supabase permissions."
+          );
           return;
         }
 
         showMessage("✅ Giveaway settings saved successfully!");
       } catch (error) {
-        console.error("Unexpected error saving giveaway_settings:", error);
-        showMessage("Unexpected error while saving settings. Check the browser console.");
+        console.error(error);
+        showMessage("Unexpected error while saving settings.");
       } finally {
         saveSettingsButton.disabled = false;
       }
     });
+
+    // --------------------------------------------------
+    // ENTRY TABLE
+    // --------------------------------------------------
 
     function addCell(row, text) {
       const cell = document.createElement("td");
@@ -511,12 +633,16 @@
 
       const { data, error } = await client
         .from("giveaway_entries")
-        .select("id, created_at, entrant_name, prize_username, knows_host, rules_accepted, review_status")
+        .select(
+          "id, created_at, entrant_name, prize_username, knows_host, rules_accepted, review_status"
+        )
         .order("created_at", { ascending: false });
 
       if (error) {
         console.error(error);
-        showMessage("Couldn't load entries. Check your admin account and database permissions.");
+        showMessage(
+          "Couldn't load entries. Check your admin account and database permissions."
+        );
         return;
       }
 
@@ -525,11 +651,18 @@
 
       for (const entry of entries) {
         const row = document.createElement("tr");
+
         addCell(row, entry.entrant_name);
         addCell(row, entry.prize_username);
         addCell(row, entry.knows_host ? "Yes" : "No");
         addCell(row, entry.rules_accepted ? "Yes" : "No");
-        addCell(row, new Date(entry.created_at).toLocaleString());
+
+        addCell(
+          row,
+          entry.created_at
+            ? new Date(entry.created_at).toLocaleString()
+            : "Unknown"
+        );
 
         const statusCell = addCell(row, "");
         const select = document.createElement("select");
@@ -537,15 +670,18 @@
         for (const status of ["pending", "eligible", "ineligible"]) {
           const option = document.createElement("option");
           option.value = status;
-          option.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+          option.textContent =
+            status.charAt(0).toUpperCase() + status.slice(1);
           select.appendChild(option);
         }
 
-        select.value = entry.review_status;
+        select.value = entry.review_status || "pending";
 
         select.addEventListener("change", async () => {
-          select.disabled = true;
+          const previousStatus = entry.review_status || "pending";
           const newStatus = select.value;
+
+          select.disabled = true;
 
           const { error } = await client
             .from("giveaway_entries")
@@ -555,16 +691,17 @@
           if (error) {
             console.error(error);
             showMessage("Couldn't update this entry. Please try again.");
-            select.value = entry.review_status;
+            select.value = previousStatus;
           } else {
             entry.review_status = newStatus;
             showMessage("Entry status updated.");
-            updateCount();
 
-            // Require a reload before the wheel can use changed eligibility.
+            // Eligibility changes invalidate the wheel's loaded list.
+            wheelHasLoadedEntries = false;
             spinWheelButton.disabled = true;
-            wheelStatus.textContent =
-              "Eligibility changed. Load eligible entries again before spinning.";
+            wheelCount.textContent =
+              "Eligibility changed. Load eligible entries again.";
+            updateCount();
           }
 
           select.disabled = false;
@@ -579,232 +716,362 @@
     }
 
     function updateCount() {
-      const pending = entries.filter(entry => entry.review_status === "pending").length;
-      const eligible = entries.filter(entry => entry.review_status === "eligible").length;
-      count.textContent = `${entries.length} total · ${pending} pending · ${eligible} eligible`;
+      const pending = entries.filter(
+        entry => entry.review_status === "pending"
+      ).length;
+
+      const eligible = entries.filter(
+        entry => entry.review_status === "eligible"
+      ).length;
+
+      count.textContent =
+        `${entries.length} total · ${pending} pending · ${eligible} eligible`;
     }
+
+    // --------------------------------------------------
+    // DRAW WHEEL
+    // --------------------------------------------------
 
     function drawWheel() {
       const ctx = wheelContext;
-      const width = wheelCanvas.width;
-      const height = wheelCanvas.height;
-      const centerX = width / 2;
-      const centerY = height / 2;
-      const radius = Math.min(width, height) / 2 - 12;
-      const fullTurn = Math.PI * 2;
+      const size = wheelCanvas.width;
+      const centre = size / 2;
+      const radius = centre - 12;
 
-      ctx.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, size, size);
+      ctx.save();
+      ctx.translate(centre, centre);
 
       if (wheelEntries.length === 0) {
         ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, fullTurn);
+        ctx.arc(0, 0, radius, 0, FULL_TURN);
         ctx.fillStyle = "#29203e";
         ctx.fill();
+
         ctx.lineWidth = 8;
-        ctx.strokeStyle = "#b99aff";
+        ctx.strokeStyle = "#814be0";
         ctx.stroke();
 
-        ctx.fillStyle = "#e6d8ff";
+        ctx.fillStyle = "#f4f0ff";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.font = "bold 25px Arial";
-        ctx.fillText("LOAD ENTRIES", centerX, centerY - 10);
-        ctx.font = "20px Arial";
-        ctx.fillText("TO BEGIN", centerX, centerY + 23);
+        ctx.font = "bold 26px Arial";
+        ctx.fillText("Load eligible", 0, -16);
+        ctx.fillText("entries!", 0, 20);
+
+        ctx.restore();
         return;
       }
 
-      const slice = fullTurn / wheelEntries.length;
-      const colors = [
-        "#7c4dff", "#e84ca8", "#3478f6", "#12a594",
-        "#f59e0b", "#d946ef", "#6366f1", "#ef4444"
-      ];
+      const slice = FULL_TURN / wheelEntries.length;
 
       wheelEntries.forEach((entry, index) => {
-        const start = wheelRotation + index * slice - Math.PI / 2;
-        const end = start + slice;
+        const startAngle =
+          wheelRotation + index * slice - Math.PI / 2;
+        const endAngle = startAngle + slice;
 
+        // Slice
         ctx.beginPath();
-        ctx.moveTo(centerX, centerY);
-        ctx.arc(centerX, centerY, radius, start, end);
+        ctx.moveTo(0, 0);
+        ctx.arc(0, 0, radius, startAngle, endAngle);
         ctx.closePath();
-        ctx.fillStyle = colors[index % colors.length];
+
+        ctx.fillStyle =
+          WHEEL_COLOURS[index % WHEEL_COLOURS.length];
+
         ctx.fill();
-        ctx.strokeStyle = "#f4f0ff";
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#17132b";
         ctx.stroke();
 
+        // Label
         ctx.save();
-        ctx.translate(centerX, centerY);
-        ctx.rotate(start + slice / 2);
+
+        const middleAngle = startAngle + slice / 2;
+        ctx.rotate(middleAngle);
+
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#ffffff";
 
-        const fontSize = wheelEntries.length > 28 ? 11 :
-          wheelEntries.length > 16 ? 13 : 16;
+        const label =
+          entry.prize_username ||
+          entry.entrant_name ||
+          "Unknown";
+
+        const maxLength =
+          wheelEntries.length > 18 ? 12 : 20;
+
+        const displayLabel = label.length > maxLength
+          ? label.slice(0, maxLength - 1) + "…"
+          : label;
+
+        const fontSize =
+          wheelEntries.length > 24 ? 12 :
+          wheelEntries.length > 14 ? 14 : 17;
+
         ctx.font = `bold ${fontSize}px Arial`;
+        ctx.fillText(displayLabel, radius - 18, 0);
 
-        let label = entry.prize_username || entry.entrant_name || "Entrant";
-        const maxLabelLength = wheelEntries.length > 24 ? 12 : 20;
-
-        if (label.length > maxLabelLength) {
-          label = label.slice(0, maxLabelLength - 1) + "…";
-        }
-
-        ctx.fillText(label, radius - 22, 0);
         ctx.restore();
       });
 
+      // Centre hub
       ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, 0, fullTurn);
-      ctx.lineWidth = 8;
-      ctx.strokeStyle = "#e6d8ff";
+      ctx.arc(0, 0, 35, 0, FULL_TURN);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+      ctx.lineWidth = 7;
+      ctx.strokeStyle = "#814be0";
       ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, 8, 0, FULL_TURN);
+      ctx.fillStyle = "#814be0";
+      ctx.fill();
+
+      ctx.restore();
     }
 
+    // --------------------------------------------------
+    // LOAD ELIGIBLE ENTRIES
+    // --------------------------------------------------
+
     async function loadWheelEntries() {
-      if (wheelSpinning) return;
+      if (isSpinning) return;
 
       loadWheelButton.disabled = true;
       spinWheelButton.disabled = true;
-      wheelStatus.textContent = "Loading eligible entries...";
-      winnerResult.classList.add("hidden");
+
+      wheelResultName.textContent = "No winner selected yet.";
+      wheelResultNote.textContent = "Loading eligible entries...";
+      wheelCount.textContent = "Loading...";
 
       try {
-        // Re-query Supabase rather than trusting the cached table.
         const { data, error } = await client
           .from("giveaway_entries")
-          .select("id, entrant_name, prize_username, review_status")
+          .select(
+            "id, entrant_name, prize_username, review_status"
+          )
           .eq("review_status", "eligible")
           .order("created_at", { ascending: true });
 
-        if (error) throw error;
+        if (error) {
+          console.error(error);
 
-        wheelEntries = (data || []).filter(entry =>
-          (entry.prize_username || entry.entrant_name || "").trim().length > 0
-        );
+          wheelEntries = [];
+          wheelHasLoadedEntries = false;
+          drawWheel();
 
-        wheelEntryCount.textContent = String(wheelEntries.length);
-        eligiblePreview.replaceChildren();
+          wheelCount.textContent = "Couldn't load eligible entries.";
+          wheelResultNote.textContent = error.message;
 
-        if (wheelEntries.length === 0) {
-          const li = document.createElement("li");
-          li.textContent = "No eligible entries found.";
-          eligiblePreview.appendChild(li);
-          wheelStatus.textContent = "No eligible entries found. Mark entries Eligible first.";
-          spinWheelButton.disabled = true;
-        } else {
-          wheelEntries.forEach(entry => {
-            const li = document.createElement("li");
-            li.textContent = entry.prize_username || entry.entrant_name;
-            eligiblePreview.appendChild(li);
-          });
-
-          wheelStatus.textContent =
-            `${wheelEntries.length} eligible ${wheelEntries.length === 1 ? "entry is" : "entries are"} on the wheel.`;
-          spinWheelButton.disabled = false;
+          showMessage("Couldn't load wheel entries.");
+          return;
         }
 
+        wheelEntries = (data || []).filter(entry =>
+          Boolean(
+            (entry.prize_username || "").trim() ||
+            (entry.entrant_name || "").trim()
+          )
+        );
+
         wheelRotation = 0;
+        wheelHasLoadedEntries = true;
+
         drawWheel();
+        renderEligiblePreview();
+
+        if (wheelEntries.length === 0) {
+          wheelCount.textContent = "No eligible entries found.";
+          wheelResultNote.textContent =
+            "Mark at least one entry eligible, then load again.";
+
+          spinWheelButton.disabled = true;
+          showMessage("There are no eligible entries to put on the wheel.");
+          return;
+        }
+
+        wheelCount.textContent =
+          `${wheelEntries.length} eligible entr${wheelEntries.length === 1 ? "y" : "ies"} loaded.`;
+
+        wheelResultNote.textContent =
+          "Ready to spin. The wheel will determine the winner.";
+
+        spinWheelButton.disabled = false;
+
+        showMessage(
+          `Loaded ${wheelEntries.length} eligible entries onto the wheel.`
+        );
       } catch (error) {
-        console.error("Could not load eligible wheel entries:", error);
-        wheelEntries = [];
-        wheelEntryCount.textContent = "0";
-        eligiblePreview.replaceChildren();
+        console.error(error);
 
-        const li = document.createElement("li");
-        li.textContent = "Could not load eligible entries.";
-        eligiblePreview.appendChild(li);
+        wheelCount.textContent = "Couldn't load eligible entries.";
+        wheelResultNote.textContent = "Please try again.";
 
-        wheelStatus.textContent =
-          "Couldn't load eligible entries. Check database permissions and try again.";
-        drawWheel();
+        showMessage("Unexpected error while loading the wheel.");
       } finally {
         loadWheelButton.disabled = false;
       }
     }
 
-    function spinWheel() {
-      if (wheelSpinning || wheelEntries.length === 0) return;
+    function renderEligiblePreview() {
+      eligiblePreview.replaceChildren();
 
-      wheelSpinning = true;
+      if (wheelEntries.length === 0) {
+        const li = document.createElement("li");
+        li.textContent = "No eligible entries.";
+        eligiblePreview.appendChild(li);
+        return;
+      }
+
+      wheelEntries.forEach(entry => {
+        const li = document.createElement("li");
+
+        li.textContent =
+          entry.prize_username ||
+          entry.entrant_name ||
+          "Unknown";
+
+        eligiblePreview.appendChild(li);
+      });
+    }
+
+    // --------------------------------------------------
+    // SPIN WHEEL
+    // THE FINAL WHEEL POSITION DETERMINES THE WINNER.
+    // --------------------------------------------------
+
+    function spinWheel() {
+      if (
+        isSpinning ||
+        !wheelHasLoadedEntries ||
+        wheelEntries.length === 0
+      ) {
+        return;
+      }
+
+      isSpinning = true;
       loadWheelButton.disabled = true;
       spinWheelButton.disabled = true;
-      winnerResult.classList.add("hidden");
-      wheelStatus.textContent = "The wheel is spinning...";
 
-      const fullTurn = Math.PI * 2;
-      const selectedIndex = Math.floor(Math.random() * wheelEntries.length);
-      const slice = fullTurn / wheelEntries.length;
+      wheelResultName.textContent = "Spinning...";
+      wheelResultNote.textContent = "Good luck to everyone!";
+      showMessage("The giveaway wheel is spinning...");
 
-      // The pointer is at the top. Rotate the selected slice's centre to it.
-      const currentMod = ((wheelRotation % fullTurn) + fullTurn) % fullTurn;
-      const desiredMod = (
-        -Math.PI / 2 - (selectedIndex + 0.5) * slice + fullTurn * 2
-      ) % fullTurn;
-      const deltaToTarget = ((desiredMod - currentMod) + fullTurn) % fullTurn;
-      const extraTurns = 6 + Math.random() * 3;
+      const slice = FULL_TURN / wheelEntries.length;
       const startRotation = wheelRotation;
-      const totalRotation = extraTurns * fullTurn + deltaToTarget;
+
+      // The final angle is random. No winner is selected beforehand.
+      const extraTurns = 5 + Math.floor(Math.random() * 4);
+      const randomOffset = Math.random() * FULL_TURN;
+
+      const targetRotation =
+        startRotation + extraTurns * FULL_TURN + randomOffset;
+
       const duration = 5200;
       const startTime = performance.now();
 
-      function animate(now) {
-        const elapsed = Math.min(1, (now - startTime) / duration);
-        const eased = 1 - Math.pow(1 - elapsed, 4);
+      function easeOutCubic(progress) {
+        return 1 - Math.pow(1 - progress, 3);
+      }
 
-        wheelRotation = startRotation + totalRotation * eased;
+      function animate(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeOutCubic(progress);
+
+        wheelRotation =
+          startRotation +
+          (targetRotation - startRotation) * eased;
+
         drawWheel();
 
-        if (elapsed < 1) {
+        if (progress < 1) {
           requestAnimationFrame(animate);
           return;
         }
 
-        wheelRotation = ((wheelRotation % fullTurn) + fullTurn) % fullTurn;
+        /*
+          Freeze the wheel at its final angle before identifying
+          the winner. Both drawing and winner detection use this
+          exact wheelRotation value.
+        */
+        wheelRotation = targetRotation;
         drawWheel();
 
-        wheelSpinning = false;
-        loadWheelButton.disabled = false;
-        spinWheelButton.disabled = wheelEntries.length === 0;
+        /*
+          IMPORTANT ANGLE CALCULATION
 
-        const winner = wheelEntries[selectedIndex];
-        const winnerName = winner.prize_username || winner.entrant_name;
+          A slice starts at:
+            wheelRotation + index * slice - PI/2
 
-        wheelStatus.textContent = "🎉 The wheel has stopped!";
-        winnerResult.classList.remove("hidden");
-        winnerResult.replaceChildren();
+          The pointer points straight up at:
+            -PI/2
 
-        const title = document.createElement("p");
-        title.textContent = "🏆 The winner is...";
+          Therefore the pointer's local angle on the wheel is:
+            normalise(-wheelRotation)
 
-        const name = document.createElement("strong");
-        name.textContent = winnerName;
+          The slice containing that angle is the winner.
+        */
+        const pointerLocalAngle =
+          normaliseAngle(-wheelRotation);
 
-        const note = document.createElement("p");
-        note.textContent =
-          "This result has not been published. Check the entry and announce the winner using Giveaway Settings when ready.";
+        const winningIndex = Math.min(
+          wheelEntries.length - 1,
+          Math.floor(pointerLocalAngle / slice)
+        );
 
-        winnerResult.append(title, name, note);
+        // The winner comes from the slice physically under the pointer.
+        const winner = wheelEntries[winningIndex];
 
-        // Autofill the announcement form without saving or publishing.
-        winnerUsernameInput.value = winnerName;
+        const winningUsername =
+          (winner.prize_username || "").trim() ||
+          (winner.entrant_name || "").trim() ||
+          "Unknown";
+
+        // Display the username belonging to the actual winning slice.
+        wheelResultName.textContent = winningUsername;
+        wheelResultNote.textContent =
+          "Winner identified from the wheel's final position.";
+
+        // Fill the announcement form without automatically saving it.
+        winnerUsernameInput.value = winningUsername;
 
         if (!winnerPrizeInput.value.trim()) {
           winnerPrizeInput.value = prizeNameInput.value.trim();
         }
+
+        showMessage(
+          `🎉 The wheel selected ${winningUsername}. Save Giveaway Settings to save the announcement.`
+        );
+
+        isSpinning = false;
+        loadWheelButton.disabled = false;
+        spinWheelButton.disabled = !wheelHasLoadedEntries;
       }
 
       requestAnimationFrame(animate);
     }
 
-    loadWheelButton.addEventListener("click", loadWheelEntries);
-    spinWheelButton.addEventListener("click", spinWheel);
+    loadWheelButton.addEventListener(
+      "click",
+      loadWheelEntries
+    );
+
+    spinWheelButton.addEventListener(
+      "click",
+      spinWheel
+    );
+
+    // --------------------------------------------------
+    // LOGIN
+    // --------------------------------------------------
 
     loginForm.addEventListener("submit", async event => {
       event.preventDefault();
+
       loginButton.disabled = true;
       showMessage("Signing in...");
 
@@ -812,71 +1079,130 @@
       const password = document.getElementById("password").value;
 
       try {
-        const { error } = await client.auth.signInWithPassword({ email, password });
+        const { error } = await client.auth.signInWithPassword({
+          email,
+          password
+        });
 
         if (error) {
           showMessage("Sign-in failed. Check your email and password.");
           return;
         }
 
-        const { data: userData, error: userError } = await client.auth.getUser();
-
-        if (userError || !userData.user || userData.user.id !== ADMIN_USER_ID) {
-          await client.auth.signOut({ scope: "local" });
-          showLoggedOut();
-          showMessage(
-            "Access denied: this account is not authorised to use the AstraHub admin panel."
-          );
-          return;
-        }
-
         showLoggedIn();
+
         await loadSettings();
         await loadEntries();
       } catch (error) {
-        console.error("Unexpected sign-in error:", error);
-        showMessage("Something went wrong while signing in. Please try again.");
+        console.error(error);
+        showMessage("Something went wrong while signing in.");
       } finally {
         loginButton.disabled = false;
       }
     });
 
-    document.getElementById("refresh-button").addEventListener("click", loadEntries);
+    // --------------------------------------------------
+    // REFRESH ENTRIES
+    // --------------------------------------------------
 
-    document.getElementById("logout-button").addEventListener("click", async () => {
-      await client.auth.signOut({ scope: "local" });
-      entries = [];
-      wheelEntries = [];
-      entriesBody.replaceChildren();
-      drawWheel();
-      showLoggedOut();
-      showMessage("You have signed out.");
-    });
+    document.getElementById("refresh-button").addEventListener(
+      "click",
+      loadEntries
+    );
 
-    document.getElementById("copy-button").addEventListener("click", async () => {
-      const eligibleNames = entries
-        .filter(entry => entry.review_status === "eligible")
-        .map(entry => entry.prize_username)
-        .filter(Boolean);
+    // --------------------------------------------------
+    // SIGN OUT
+    // --------------------------------------------------
 
-      if (eligibleNames.length === 0) {
-        showMessage("There are no eligible usernames to copy yet.");
+    document.getElementById("logout-button").addEventListener(
+      "click",
+      async () => {
+        await client.auth.signOut();
+
+        entries = [];
+        entriesBody.replaceChildren();
+
+        wheelEntries = [];
+        wheelHasLoadedEntries = false;
+        wheelRotation = 0;
+        isSpinning = false;
+
+        spinWheelButton.disabled = true;
+        loadWheelButton.disabled = false;
+
+        wheelResultName.textContent = "No winner selected yet.";
+        wheelResultNote.textContent = "Load eligible entries to begin.";
+        wheelCount.textContent = "Load eligible entries to begin.";
+
+        eligiblePreview.replaceChildren();
+
+        const li = document.createElement("li");
+        li.textContent = "Load eligible entries to see the list.";
+        eligiblePreview.appendChild(li);
+
+        drawWheel();
+        updateCount();
+
+        showLoggedOut();
+        showMessage("You have signed out.");
+      }
+    );
+
+    // --------------------------------------------------
+    // COPY ELIGIBLE USERNAMES
+    // --------------------------------------------------
+
+    document.getElementById("copy-button").addEventListener(
+      "click",
+      async () => {
+        const eligibleNames = entries
+          .filter(entry => entry.review_status === "eligible")
+          .map(entry => entry.prize_username)
+          .filter(name => Boolean((name || "").trim()));
+
+        if (eligibleNames.length === 0) {
+          showMessage("There are no eligible usernames to copy yet.");
+          return;
+        }
+
+        try {
+          await navigator.clipboard.writeText(
+            eligibleNames.join("\n")
+          );
+
+          showMessage(
+            `Copied ${eligibleNames.length} eligible usernames!`
+          );
+        } catch (error) {
+          console.error(error);
+
+          showMessage(
+            "Couldn't access the clipboard. Open this page over HTTPS and try again."
+          );
+        }
+      }
+    );
+
+    // --------------------------------------------------
+    // INITIALISE
+    // --------------------------------------------------
+
+    async function checkSession() {
+      const { data, error } = await client.auth.getSession();
+
+      if (error) {
+        showLoggedOut();
+        showMessage("Couldn't check your session. Please sign in.");
         return;
       }
 
-      try {
-        await navigator.clipboard.writeText(eligibleNames.join("\n"));
-        showMessage(`Copied ${eligibleNames.length} eligible usernames!`);
-      } catch (error) {
-        showMessage("Couldn't access the clipboard. Open this page over HTTPS and try again.");
+      if (data.session) {
+        showLoggedIn();
+        await loadSettings();
+        await loadEntries();
+      } else {
+        showLoggedOut();
       }
-    });
-
-    async function checkSession() {
-      // Always require a fresh login when the admin page opens.
-      await client.auth.signOut({ scope: "local" });
-      showLoggedOut();
-      drawWheel();
     }
 
     client.auth.onAuthStateChange((event, session) => {
