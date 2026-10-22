@@ -7,10 +7,7 @@
   <title>Admin Panel | _AstraHub</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
@@ -19,21 +16,9 @@
       color: #f4f0ff;
       background: linear-gradient(135deg, #101020, #21123b);
     }
-
-    header, main {
-      max-width: 1050px;
-      margin: 0 auto;
-    }
-
-    header {
-      margin-bottom: 32px;
-    }
-
-    a {
-      color: #c9a5ff;
-      text-decoration: none;
-    }
-
+    header, main { max-width: 1050px; margin: 0 auto; }
+    header { margin-bottom: 32px; }
+    a { color: #c9a5ff; text-decoration: none; }
     .panel {
       padding: 28px;
       margin-bottom: 24px;
@@ -41,21 +26,9 @@
       border: 1px solid #49336d;
       border-radius: 16px;
     }
-
-    h1, h2 {
-      margin-top: 0;
-    }
-
-    p {
-      color: #c7bfdc;
-      line-height: 1.5;
-    }
-
-    label {
-      display: block;
-      margin: 16px 0 8px;
-    }
-
+    h1, h2 { margin-top: 0; }
+    p { color: #c7bfdc; line-height: 1.5; }
+    label { display: block; margin: 16px 0 8px; }
     input {
       width: 100%;
       padding: 12px;
@@ -65,94 +38,43 @@
       border-radius: 8px;
       font-size: 1rem;
     }
-
     button, select {
       padding: 11px 14px;
       border: 0;
       border-radius: 8px;
       font-size: 0.95rem;
     }
-
     button {
       color: white;
       background: #814be0;
       font-weight: bold;
       cursor: pointer;
     }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: wait;
-    }
-
-    button.secondary {
-      background: #38304f;
-    }
-
-    #login-button {
-      width: 100%;
-      margin-top: 20px;
-    }
-
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 720px;
-    }
-
+    button:disabled { opacity: 0.6; cursor: wait; }
+    button.secondary { background: #38304f; }
+    #login-button { width: 100%; margin-top: 20px; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
     th, td {
       padding: 12px;
       text-align: left;
       border-bottom: 1px solid #403454;
       vertical-align: top;
     }
-
-    th {
-      color: #d7c3ff;
-    }
-
+    th { color: #d7c3ff; }
     td select {
       color: white;
       background: #29203e;
       border: 1px solid #58447a;
     }
-
-    .status {
-      color: #d7c3ff;
-      font-weight: bold;
-    }
-
-    #message {
-      overflow-wrap: anywhere;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .small {
-      font-size: 0.85rem;
-    }
-
+    .status { color: #d7c3ff; font-weight: bold; }
+    #message { overflow-wrap: anywhere; }
+    .hidden { display: none !important; }
+    .small { font-size: 0.85rem; }
     @media (max-width: 600px) {
-      body {
-        padding: 14px;
-      }
-
-      .panel {
-        padding: 18px;
-      }
+      body { padding: 14px; }
+      .panel { padding: 18px; }
     }
   </style>
 </head>
@@ -166,24 +88,11 @@
     <section class="panel" id="login-panel">
       <h1>🔐 Admin Login</h1>
       <p>Sign in with your private AstraHub admin account.</p>
-
       <form id="login-form">
         <label for="email">Admin email</label>
-        <input
-          id="email"
-          type="email"
-          autocomplete="username"
-          required
-        >
-
+        <input id="email" type="email" autocomplete="username" required>
         <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          autocomplete="current-password"
-          required
-        >
-
+        <input id="password" type="password" autocomplete="current-password" required>
         <button id="login-button" type="submit">Sign In</button>
       </form>
     </section>
@@ -191,67 +100,50 @@
     <section class="panel hidden" id="admin-panel">
       <h1>🎁 Giveaway Entries</h1>
       <p>Review submissions and manually decide who is eligible.</p>
+
       <section class="panel" id="giveaway-settings">
-  <h2>⚙️ Giveaway Settings</h2>
-  <p>Manage the prize, entry status, and winner announcement.</p>
+        <h2>⚙️ Giveaway Settings</h2>
+        <p>Manage the prize, entry status, and winner announcement.</p>
 
-  <form id="settings-form">
-    <label for="prize-name">Prize name</label>
-    <input id="prize-name" type="text" maxlength="150"
-           placeholder="e.g. £10 Gift Card" required>
+        <form id="settings-form">
+          <label for="prize-name">Prize name</label>
+          <input id="prize-name" type="text" maxlength="150" placeholder="e.g. £10 Gift Card" required>
 
-    <label for="prize-description">Prize description</label>
-    <input id="prize-description" type="text" maxlength="1000"
-           placeholder="Describe the prize" required>
+          <label for="prize-description">Prize description</label>
+          <input id="prize-description" type="text" maxlength="1000" placeholder="Describe the prize" required>
 
-    <label for="prize-image-url">Prize image URL (optional)</label>
-    <input id="prize-image-url" type="url"
-           placeholder="https://example.com/prize.png">
+          <label for="prize-image-url">Prize image URL (optional)</label>
+          <input id="prize-image-url" type="url" placeholder="https://example.com/prize.png">
 
-    <label for="giveaway-open">Entry status</label>
-    <select id="giveaway-open">
-      <option value="true">Open</option>
-      <option value="false">Closed</option>
-    </select>
+          <label for="giveaway-open">Entry status</label>
+          <select id="giveaway-open">
+            <option value="true">Open</option>
+            <option value="false">Closed</option>
+          </select>
 
-    <h2 style="margin-top:28px">🏆 Winner Announcement</h2>
+          <h2 style="margin-top:28px">🏆 Winner Announcement</h2>
+          <label for="winner-username">Winner's username</label>
+          <input id="winner-username" type="text" maxlength="150" placeholder="Winning username">
 
-    <label for="winner-username">Winner's username</label>
-    <input id="winner-username" type="text" maxlength="150"
-           placeholder="Winning username">
+          <label for="winner-prize">Prize awarded</label>
+          <input id="winner-prize" type="text" maxlength="150" placeholder="Prize the winner receives">
 
-    <label for="winner-prize">Prize awarded</label>
-    <input id="winner-prize" type="text" maxlength="150"
-           placeholder="Prize the winner receives">
+          <label>
+            <input id="announcement-published" type="checkbox" style="width:auto">
+            Publish winner announcement publicly
+          </label>
 
-    <label>
-      <input id="announcement-published" type="checkbox"
-             style="width:auto">
-      Publish winner announcement publicly
-    </label>
-
-    <button id="save-settings-button" type="submit">
-      Save Giveaway Settings
-    </button>
-  </form>
-</section>
+          <button id="save-settings-button" type="submit">Save Giveaway Settings</button>
+        </form>
+      </section>
 
       <div class="toolbar">
-        <button id="refresh-button" class="secondary">
-          Refresh Entries
-        </button>
-
-        <button id="copy-button">
-          Copy Eligible Usernames
-        </button>
-
-        <button id="logout-button" class="secondary">
-          Sign Out
-        </button>
+        <button id="refresh-button" class="secondary" type="button">Refresh Entries</button>
+        <button id="copy-button" type="button">Copy Eligible Usernames</button>
+        <button id="logout-button" class="secondary" type="button">Sign Out</button>
       </div>
 
       <p id="count"></p>
-
       <div class="table-wrap">
         <table>
           <thead>
@@ -264,11 +156,9 @@
               <th>Eligibility</th>
             </tr>
           </thead>
-
           <tbody id="entries-body"></tbody>
         </table>
       </div>
-
       <p class="small">
         Check eligibility yourself before marking someone eligible.
         Only mark entries eligible after you've completed your checks.
@@ -280,38 +170,13 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
-
   <script>
-    const client = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Extra UI safeguard. Supabase RLS policies must still enforce this server-side.
     const ADMIN_USER_ID = "0ce9ee5f-903f-494a-b3db-c1defd13933e";
     const IDLE_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes
     let idleLogoutTimer = null;
-
-    function stopIdleLogoutTimer() {
-      if (idleLogoutTimer !== null) {
-        clearTimeout(idleLogoutTimer);
-        idleLogoutTimer = null;
-      }
-    }
-
-    function resetIdleLogoutTimer() {
-      if (!adminPanel || adminPanel.classList.contains("hidden")) return;
-      stopIdleLogoutTimer();
-      idleLogoutTimer = setTimeout(async () => {
-        showMessage("You've been signed out after 15 minutes of inactivity.");
-        await client.auth.signOut();
-        showLoggedOut();
-      }, IDLE_TIMEOUT_MS);
-    }
-
-    ["pointerdown", "keydown", "mousemove", "touchstart", "scroll"].forEach(type => {
-      document.addEventListener(type, resetIdleLogoutTimer, { passive: true });
-    });
 
     const loginPanel = document.getElementById("login-panel");
     const adminPanel = document.getElementById("admin-panel");
@@ -321,8 +186,6 @@
     const message = document.getElementById("message");
     const count = document.getElementById("count");
 
-    let entries = [];
-        // Giveaway settings elements
     const settingsForm = document.getElementById("settings-form");
     const prizeNameInput = document.getElementById("prize-name");
     const prizeDescriptionInput = document.getElementById("prize-description");
@@ -333,7 +196,47 @@
     const announcementPublishedInput = document.getElementById("announcement-published");
     const saveSettingsButton = document.getElementById("save-settings-button");
 
-    // Load the saved settings from Supabase
+    let entries = [];
+
+    function showMessage(text) {
+      message.textContent = text;
+    }
+
+    function stopIdleLogoutTimer() {
+      if (idleLogoutTimer !== null) {
+        clearTimeout(idleLogoutTimer);
+        idleLogoutTimer = null;
+      }
+    }
+
+    function resetIdleLogoutTimer() {
+      if (adminPanel.classList.contains("hidden")) return;
+      stopIdleLogoutTimer();
+      idleLogoutTimer = setTimeout(async () => {
+        await client.auth.signOut({ scope: "local" });
+        entries = [];
+        entriesBody.replaceChildren();
+        showLoggedOut();
+        showMessage("You've been signed out after 15 minutes of inactivity.");
+      }, IDLE_TIMEOUT_MS);
+    }
+
+    ["pointerdown", "keydown", "mousemove", "touchstart", "scroll"].forEach(type => {
+      document.addEventListener(type, resetIdleLogoutTimer, { passive: true });
+    });
+
+    function showLoggedOut() {
+      stopIdleLogoutTimer();
+      loginPanel.classList.remove("hidden");
+      adminPanel.classList.add("hidden");
+    }
+
+    function showLoggedIn() {
+      loginPanel.classList.add("hidden");
+      adminPanel.classList.remove("hidden");
+      resetIdleLogoutTimer();
+    }
+
     async function loadSettings() {
       const { data, error } = await client
         .from("giveaway_settings")
@@ -359,14 +262,11 @@
       winnerUsernameInput.value = data.winner_username ?? "";
       winnerPrizeInput.value = data.winner_prize ?? "";
       announcementPublishedInput.checked = Boolean(data.announcement_published);
-
       return true;
     }
 
-    // Save settings to Supabase
     settingsForm.addEventListener("submit", async event => {
       event.preventDefault();
-
       saveSettingsButton.disabled = true;
       showMessage("Saving giveaway settings...");
 
@@ -392,7 +292,6 @@
           showMessage(`Couldn't save settings: ${error.message}`);
           return;
         }
-
         showMessage("✅ Giveaway settings saved successfully!");
       } catch (error) {
         console.error("Unexpected error saving giveaway_settings:", error);
@@ -402,44 +301,23 @@
       }
     });
 
-    function showMessage(text) {
-      message.textContent = text;
-    }
-
-    function showLoggedOut() {
-      stopIdleLogoutTimer();
-      loginPanel.classList.remove("hidden");
-      adminPanel.classList.add("hidden");
-    }
-
-    function showLoggedIn() {
-      loginPanel.classList.add("hidden");
-      adminPanel.classList.remove("hidden");
-      resetIdleLogoutTimer();
-    }
-
     function addCell(row, text) {
       const cell = document.createElement("td");
-      cell.textContent = text;
+      cell.textContent = text ?? "";
       row.appendChild(cell);
       return cell;
     }
 
     async function loadEntries() {
       showMessage("Loading entries...");
-
       const { data, error } = await client
         .from("giveaway_entries")
-        .select(
-          "id, created_at, entrant_name, prize_username, knows_host, rules_accepted, review_status"
-        )
+        .select("id, created_at, entrant_name, prize_username, knows_host, rules_accepted, review_status")
         .order("created_at", { ascending: false });
 
       if (error) {
         console.error(error);
-        showMessage(
-          "Couldn't load entries. Check your admin account and database permissions."
-        );
+        showMessage("Couldn't load entries. Check your admin account and database permissions.");
         return;
       }
 
@@ -448,36 +326,28 @@
 
       for (const entry of entries) {
         const row = document.createElement("tr");
-
         addCell(row, entry.entrant_name);
         addCell(row, entry.prize_username);
         addCell(row, entry.knows_host ? "Yes" : "No");
         addCell(row, entry.rules_accepted ? "Yes" : "No");
-
-        addCell(
-          row,
-          new Date(entry.created_at).toLocaleString()
-        );
+        addCell(row, new Date(entry.created_at).toLocaleString());
 
         const statusCell = addCell(row, "");
         const select = document.createElement("select");
-
         for (const status of ["pending", "eligible", "ineligible"]) {
           const option = document.createElement("option");
           option.value = status;
-          option.textContent =
-            status.charAt(0).toUpperCase() + status.slice(1);
+          option.textContent = status.charAt(0).toUpperCase() + status.slice(1);
           select.appendChild(option);
         }
 
         select.value = entry.review_status;
-
         select.addEventListener("change", async () => {
           select.disabled = true;
-
+          const newStatus = select.value;
           const { error } = await client
             .from("giveaway_entries")
-            .update({ review_status: select.value })
+            .update({ review_status: newStatus })
             .eq("id", entry.id);
 
           if (error) {
@@ -485,11 +355,10 @@
             showMessage("Couldn't update this entry. Please try again.");
             select.value = entry.review_status;
           } else {
-            entry.review_status = select.value;
+            entry.review_status = newStatus;
             showMessage("Entry status updated.");
             updateCount();
           }
-
           select.disabled = false;
         });
 
@@ -502,108 +371,29 @@
     }
 
     function updateCount() {
-      const pending = entries.filter(
-        entry => entry.review_status === "pending"
-      ).length;
-
-      const eligible = entries.filter(
-        entry => entry.review_status === "eligible"
-      ).length;
-
-      count.textContent =
-        `${entries.length} total · ${pending} pending · ${eligible} eligible`;
+      const pending = entries.filter(entry => entry.review_status === "pending").length;
+      const eligible = entries.filter(entry => entry.review_status === "eligible").length;
+      count.textContent = `${entries.length} total · ${pending} pending · ${eligible} eligible`;
     }
 
     loginForm.addEventListener("submit", async event => {
       event.preventDefault();
-
       loginButton.disabled = true;
       showMessage("Signing in...");
 
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
-      const { error } = await client.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      loginButton.disabled = false;
-
-      if (error) {
-        showMessage("Sign-in failed. Check your email and password.");
-        return;
-      }
-
-      const { data: userData, error: userError } = await client.auth.getUser();
-      if (userError || !userData.user || userData.user.id !== ADMIN_USER_ID) {
-        await client.auth.signOut();
-        showLoggedOut();
-        showMessage("Access denied: this account is not authorised to use the AstraHub admin panel.");
-        return;
-      }
-
-      showLoggedIn();
-      await loadSettings();
-      await loadEntries();
-    });
-
-    document.getElementById("refresh-button").addEventListener(
-      "click",
-      loadEntries
-    );
-
-    document.getElementById("logout-button").addEventListener(
-      "click",
-      async () => {
-        await client.auth.signOut();
-        entries = [];
-        entriesBody.replaceChildren();
-        showLoggedOut();
-        showMessage("You have signed out.");
-      }
-    );
-
-    document.getElementById("copy-button").addEventListener(
-      "click",
-      async () => {
-        const eligibleNames = entries
-          .filter(entry => entry.review_status === "eligible")
-          .map(entry => entry.prize_username);
-
-        if (eligibleNames.length === 0) {
-          showMessage("There are no eligible usernames to copy yet.");
+      try {
+        const { error } = await client.auth.signInWithPassword({ email, password });
+        if (error) {
+          showMessage("Sign-in failed. Check your email and password.");
           return;
         }
 
-        try {
-          await navigator.clipboard.writeText(
-            eligibleNames.join("\n")
-          );
-          showMessage(
-            `Copied ${eligibleNames.length} eligible usernames!`
-          );
-        } catch (error) {
-          showMessage(
-            "Couldn't access the clipboard. Open this page over HTTPS and try again."
-          );
-        }
-      }
-    );
-
-    async function checkSession() {
-      const { data, error } = await client.auth.getSession();
-
-      if (error) {
-        showLoggedOut();
-        showMessage("Couldn't check your session. Please sign in.");
-        return;
-      }
-
-      if (data.session) {
         const { data: userData, error: userError } = await client.auth.getUser();
         if (userError || !userData.user || userData.user.id !== ADMIN_USER_ID) {
-          await client.auth.signOut();
+          await client.auth.signOut({ scope: "local" });
           showLoggedOut();
           showMessage("Access denied: this account is not authorised to use the AstraHub admin panel.");
           return;
@@ -612,9 +402,46 @@
         showLoggedIn();
         await loadSettings();
         await loadEntries();
-      } else {
-        showLoggedOut();
+      } catch (error) {
+        console.error("Unexpected sign-in error:", error);
+        showMessage("Something went wrong while signing in. Please try again.");
+      } finally {
+        loginButton.disabled = false;
       }
+    });
+
+    document.getElementById("refresh-button").addEventListener("click", loadEntries);
+
+    document.getElementById("logout-button").addEventListener("click", async () => {
+      await client.auth.signOut({ scope: "local" });
+      entries = [];
+      entriesBody.replaceChildren();
+      showLoggedOut();
+      showMessage("You have signed out.");
+    });
+
+    document.getElementById("copy-button").addEventListener("click", async () => {
+      const eligibleNames = entries
+        .filter(entry => entry.review_status === "eligible")
+        .map(entry => entry.prize_username);
+
+      if (eligibleNames.length === 0) {
+        showMessage("There are no eligible usernames to copy yet.");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(eligibleNames.join("\n"));
+        showMessage(`Copied ${eligibleNames.length} eligible usernames!`);
+      } catch (error) {
+        showMessage("Couldn't access the clipboard. Open this page over HTTPS and try again.");
+      }
+    });
+
+    async function checkSession() {
+      // Always require a fresh login when the admin page opens.
+      await client.auth.signOut({ scope: "local" });
+      showLoggedOut();
     }
 
     client.auth.onAuthStateChange((event, session) => {
