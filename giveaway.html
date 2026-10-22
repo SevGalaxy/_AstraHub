@@ -56,7 +56,10 @@
       font-weight: bold;
     }
 
-    input[type="text"] {
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
       width: 100%;
       padding: 13px;
       color: white;
@@ -64,6 +67,17 @@
       border: 1px solid #58447a;
       border-radius: 9px;
       font-size: 1rem;
+      font-family: inherit;
+    }
+
+    select option {
+      color: white;
+      background: #100d20;
+    }
+
+    .privacy-note {
+      margin-top: 10px;
+      font-size: 0.9rem;
     }
 
     .check {
@@ -107,6 +121,10 @@
       display: inline-block;
       margin-top: 24px;
     }
+
+    [hidden] {
+      display: none !important;
+    }
   </style>
 </head>
 
@@ -146,6 +164,33 @@
         placeholder="Public username only — never your password"
       >
 
+      <label for="contact-method">How should the host contact you?</label>
+      <select id="contact-method" name="contact-method" required>
+        <option value="">Choose a contact method</option>
+        <option value="Email">Email</option>
+        <option value="Phone number">Phone number</option>
+        <option value="Something else">Something else</option>
+      </select>
+
+      <div id="contact-details-group" hidden>
+        <label id="contact-details-label" for="contact-details">
+          Contact details
+        </label>
+        <input
+          id="contact-details"
+          name="contact-details"
+          type="text"
+          maxlength="200"
+          autocomplete="off"
+          placeholder="Enter your contact details"
+        >
+      </div>
+
+      <p class="privacy-note">
+        Your contact details are submitted for the host to use if needed.
+        Do not enter a password or other sensitive information.
+      </p>
+
       <label class="check">
         <input id="knows-host" type="checkbox" required>
         <span>I confirm that I know the giveaway host.</span>
@@ -177,10 +222,54 @@
     const message = document.getElementById("message");
     const button = document.getElementById("submit-button");
 
+    const contactMethod = document.getElementById("contact-method");
+    const contactDetailsGroup = document.getElementById("contact-details-group");
+    const contactDetails = document.getElementById("contact-details");
+    const contactDetailsLabel = document.getElementById("contact-details-label");
+
+    function updateContactField() {
+      const method = contactMethod.value;
+
+      contactDetailsGroup.hidden = !method;
+      contactDetails.required = Boolean(method);
+
+      if (method === "Email") {
+        contactDetails.type = "email";
+        contactDetailsLabel.textContent = "Email address";
+        contactDetails.placeholder = "Enter your email address";
+        contactDetails.autocomplete = "email";
+      } else if (method === "Phone number") {
+        contactDetails.type = "tel";
+        contactDetailsLabel.textContent = "Phone number";
+        contactDetails.placeholder = "Enter your phone number";
+        contactDetails.autocomplete = "tel";
+      } else {
+        contactDetails.type = "text";
+        contactDetailsLabel.textContent = "How can the host contact you?";
+        contactDetails.placeholder = "Enter your preferred contact details";
+        contactDetails.autocomplete = "off";
+      }
+
+      if (!method) {
+        contactDetails.value = "";
+      }
+    }
+
+    contactMethod.addEventListener("change", updateContactField);
+
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
 
       if (!form.reportValidity()) return;
+
+      const selectedContactMethod = contactMethod.value;
+      const enteredContactDetails = contactDetails.value.trim();
+
+      if (!selectedContactMethod || !enteredContactDetails) {
+        message.textContent =
+          "Please choose a contact method and enter the requested details.";
+        return;
+      }
 
       button.disabled = true;
       message.textContent = "Submitting your entry...";
@@ -203,6 +292,8 @@
           .insert({
             entrant_name: document.getElementById("entrant-name").value.trim(),
             prize_username: document.getElementById("prize-username").value.trim(),
+            contact_method: selectedContactMethod,
+            contact_details: enteredContactDetails,
             knows_host: document.getElementById("knows-host").checked,
             rules_accepted: document.getElementById("rules-accepted").checked,
             review_status: "pending"
@@ -211,6 +302,8 @@
         if (error) throw error;
 
         form.reset();
+        updateContactField();
+
         message.textContent =
           "✅ Entry submitted! Your entry is awaiting the host's review.";
       } catch (error) {
@@ -221,6 +314,8 @@
         button.disabled = false;
       }
     });
+
+    updateContactField();
   </script>
 </body>
 </html>
