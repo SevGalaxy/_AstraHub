@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101020">
+  <title>Giveaway Status | _AstraHub</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #f4f0ff;
+      background: linear-gradient(135deg, #101020, #21123b);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 8%;
+      border-bottom: 1px solid #302448;
+      background: #0c0a19;
+    }
+
+    .logo {
+      color: white;
+      font-size: 25px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #a970ff;
+    }
+
+    nav {
+      display: flex;
+      gap: 22px;
+    }
+
+    nav a {
+      color: #c7bfdc;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: #bd94ff;
+    }
+
+    main {
+      width: min(850px, 88%);
+      margin: auto;
+      padding: 65px 0;
+    }
+
+    .panel {
+      padding: 30px;
+      margin-bottom: 22px;
+      background: #17132b;
+      border: 1px solid #49336d;
+      border-radius: 18px;
+    }
+
+    .eyebrow {
+      color: #bd94ff;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 7vw, 54px);
+      margin: 14px 0;
+    }
+
+    h1 span {
+      color: #b184ff;
+    }
+
+    p {
+      color: #c7bfdc;
+      line-height: 1.7;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 14px;
+      background: #29203e;
+      color: #d7c3ff;
+    }
+
+    .status.open {
+      color: #8dffbd;
+      background: #123625;
+    }
+
+    .status.closed {
+      color: #ffaaaa;
+      background: #401c2a;
+    }
+
+    .prize-image {
+      display: none;
+      width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+      margin: 22px 0;
+      border-radius: 12px;
+      background: #100d20;
+    }
+
+    .winner-box {
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid #7550a8;
+      border-radius: 14px;
+      background: #211536;
+    }
+
+    .winner-name {
+      color: #d5b7ff;
+      font-size: 25px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 20px;
+      border-radius: 10px;
+      color: white;
+      background: #814be0;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 8px 8px 0 0;
+    }
+
+    .button:hover {
+      background: #995ff2;
+    }
+
+    .button.secondary {
+      background: #38304f;
+    }
+
+    #page-message {
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      padding: 25px;
+      border-top: 1px solid #302448;
+      color: #77718b;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 18px 6%;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      main {
+        padding: 40px 0;
+      }
+
+      .panel {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">_<span>Astra</span>Hub</a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="panel">
+      <div class="eyebrow">✦ GIVEAWAY CENTRE</div>
+      <h1>Giveaway <span>Status</span></h1>
+
+      <p>Everything you need to know about the current _AstraHub giveaway.</p>
+
+      <span id="status-badge" class="status">Loading status...</span>
+
+      <h2 id="prize-name">Loading prize...</h2>
+
+      <img
+        id="prize-image"
+        class="prize-image"
+        alt="Current giveaway prize"
+        referrerpolicy="no-referrer"
+      >
+
+      <p id="prize-description">Loading giveaway details...</p>
+
+      <div id="winner-section" class="winner-box" hidden>
+        <div class="eyebrow">🏆 WINNER ANNOUNCEMENT</div>
+        <p>Congratulations to:</p>
+        <div id="winner-username" class="winner-name"></div>
+        <p id="winner-prize"></p>
+      </div>
+
+      <p id="page-message" role="status" aria-live="polite">
+        Connecting to giveaway settings...
+      </p>
+
+      <a class="button" id="enter-button" href="giveaway.html">
+        🎁 Enter Giveaway
+      </a>
+
+      <a class="button secondary" href="giveaway-main.html">
+        ← Back to Giveaways
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> _AstraHub. All rights reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const client = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+    async function loadGiveawayStatus() {
+      const badge = document.getElementById("status-badge");
+      const message = document.getElementById("page-message");
+      const enterButton = document.getElementById("enter-button");
+
+      try {
+        const { data, error } = await client
+          .from("giveaway_settings")
+          .select(
+            "prize_name, prize_description, prize_image_url, giveaway_open, winner_username, winner_prize, announcement_published"
+          )
+          .eq("id", 1)
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (!data) {
+          throw new Error("Giveaway settings have not been configured.");
+        }
+
+        document.getElementById("prize-name").textContent =
+          data.prize_name;
+
+        document.getElementById("prize-description").textContent =
+          data.prize_description;
+
+        if (data.prize_image_url) {
+          const image = document.getElementById("prize-image");
+          image.src = data.prize_image_url;
+          image.style.display = "block";
+
+          image.onerror = () => {
+            image.style.display = "none";
+          };
+        }
+
+        badge.textContent = data.giveaway_open
+          ? "● Giveaway Open"
+          : "● Giveaway Closed";
+
+        badge.className = data.giveaway_open
+          ? "status open"
+          : "status closed";
+
+        enterButton.hidden = !data.giveaway_open;
+
+        const winnerSection =
+          document.getElementById("winner-section");
+
+        if (
+          data.announcement_published &&
+          data.winner_username.trim()
+        ) {
+          winnerSection.hidden = false;
+
+          document.getElementById("winner-username").textContent =
+            data.winner_username;
+
+          document.getElementById("winner-prize").textContent =
+            data.winner_prize || data.prize_name;
+        } else {
+          winnerSection.hidden = true;
+        }
+
+        message.textContent = "Giveaway information loaded.";
+      } catch (error) {
+        console.error(error);
+
+        badge.textContent = "Status unavailable";
+        badge.className = "status";
+
+        document.getElementById("prize-name").textContent =
+          "Unable to load giveaway";
+
+        document.getElementById("prize-description").textContent =
+          "Please try again later.";
+
+        enterButton.hidden = true;
+
+        message.textContent =
+          "Couldn't load the giveaway settings. Please try again later.";
+      }
+    }
+
+    loadGiveawayStatus();
+  </script>
+</body>
+</html>
