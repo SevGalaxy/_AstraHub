@@ -311,23 +311,30 @@
     async function loadSettings() {
       const { data, error } = await client
         .from("giveaway_settings")
-        .select("*")
+        .select("id, prize_name, prize_description, prize_image_url, giveaway_open, winner_username, winner_prize, announcement_published")
         .eq("id", 1)
-        .single();
+        .maybeSingle();
 
       if (error) {
-        console.error(error);
-        showMessage("Couldn't load giveaway settings.");
-        return;
+        console.error("Failed to load giveaway_settings:", error);
+        showMessage(`Couldn't load giveaway settings: ${error.message}`);
+        return false;
       }
 
-      prizeNameInput.value = data.prize_name || "";
-      prizeDescriptionInput.value = data.prize_description || "";
-      prizeImageInput.value = data.prize_image_url || "";
-      giveawayOpenInput.value = String(data.giveaway_open);
-      winnerUsernameInput.value = data.winner_username || "";
-      winnerPrizeInput.value = data.winner_prize || "";
-      announcementPublishedInput.checked = data.announcement_published;
+      if (!data) {
+        showMessage("No giveaway settings row found. In Supabase, run the INSERT for id = 1.");
+        return false;
+      }
+
+      prizeNameInput.value = data.prize_name ?? "";
+      prizeDescriptionInput.value = data.prize_description ?? "";
+      prizeImageInput.value = data.prize_image_url ?? "";
+      giveawayOpenInput.value = String(data.giveaway_open ?? true);
+      winnerUsernameInput.value = data.winner_username ?? "";
+      winnerPrizeInput.value = data.winner_prize ?? "";
+      announcementPublishedInput.checked = Boolean(data.announcement_published);
+
+      return true;
     }
 
     // Save settings to Supabase
@@ -348,20 +355,25 @@
         updated_at: new Date().toISOString()
       };
 
-      const { error } = await client
-        .from("giveaway_settings")
-        .update(settings)
-        .eq("id", 1);
+      try {
+        const { error } = await client
+          .from("giveaway_settings")
+          .update(settings)
+          .eq("id", 1);
 
-      saveSettingsButton.disabled = false;
+        if (error) {
+          console.error("Failed to save giveaway_settings:", error);
+          showMessage(`Couldn't save settings: ${error.message}`);
+          return;
+        }
 
-      if (error) {
-        console.error(error);
-        showMessage("Couldn't save settings. Check your admin login and Supabase permissions.");
-        return;
+        showMessage("✅ Giveaway settings saved successfully!");
+      } catch (error) {
+        console.error("Unexpected error saving giveaway_settings:", error);
+        showMessage("Unexpected error while saving settings. Check the browser console.");
+      } finally {
+        saveSettingsButton.disabled = false;
       }
-
-      showMessage("✅ Giveaway settings saved successfully!");
     });
 
     function showMessage(text) {
