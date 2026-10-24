@@ -1209,28 +1209,42 @@
     // --------------------------------------------------
 
     async function checkSession() {
-      const { data, error } = await client.auth.getSession();
+  // Always hide the admin panel until access is verified.
+  showLoggedOut();
 
-      if (error) {
-        showLoggedOut();
-        showMessage("Couldn't check your session. Please sign in.");
-        return;
-      }
+  const { data, error } = await client.auth.getSession();
 
-      if (data.session) {
-        showLoggedIn();
-        await loadSettings();
-        await loadEntries();
-      } else {
-        showLoggedOut();
-      }
-    }
+  if (error || !data.session) {
+    showLoggedOut();
+    showMessage("Please sign in with your admin account.");
+    return;
+  }
+
+  // Replace this with your existing authorised admin user's UUID.
+  const ADMIN_USER_ID = "0ce9ee5f-903f-494a-b3db-c1defd13933e";
+
+  if (data.session.user.id !== ADMIN_USER_ID) {
+    await client.auth.signOut();
+    showLoggedOut();
+    showMessage("Access denied. This account isn't authorised.");
+    return;
+  }
+
+  showLoggedIn();
+  await loadSettings();
+  await loadEntries();
+}
 
     client.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT" || !session) {
-        showLoggedOut();
-      }
-    });
+  if (event === "SIGNED_OUT" || !session) {
+    showLoggedOut();
+    return;
+  }
+
+  if (session.user.id !== "0ce9ee5f-903f-494a-b3db-c1defd13933e") {
+    showLoggedOut();
+  }
+});
 
     drawWheel();
     checkSession();
