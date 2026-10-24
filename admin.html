@@ -475,7 +475,7 @@
     class="secondary"
     style="width: 100%; padding: 15px; font-size: 1rem;"
   >
-    🚪 Sign Out
+    Sign Out
   </button>
 </div>
 </section>
@@ -1160,42 +1160,51 @@
     // SIGN OUT
     // --------------------------------------------------
 
+    async function signOutAdmin() {
+      await client.auth.signOut();
+
+      entries = [];
+      entriesBody.replaceChildren();
+
+      wheelEntries = [];
+      wheelHasLoadedEntries = false;
+      wheelRotation = 0;
+      isSpinning = false;
+
+      spinWheelButton.disabled = true;
+      loadWheelButton.disabled = false;
+
+      wheelResultName.textContent = "No winner selected yet.";
+      wheelResultNote.textContent = "Load eligible entries to begin.";
+      wheelCount.textContent = "Load eligible entries to begin.";
+
+      eligiblePreview.replaceChildren();
+
+      const li = document.createElement("li");
+      li.textContent = "Load eligible entries to see the list.";
+      eligiblePreview.appendChild(li);
+
+      drawWheel();
+      updateCount();
+
+      showLoggedOut();
+      showMessage("You have signed out.");
+    }
+
+    // Existing sign-out button
     document.getElementById("logout-button").addEventListener(
       "click",
-      async () => {
-        await client.auth.signOut();
+      signOutAdmin
+    );
 
-        entries = [];
-        entriesBody.replaceChildren();
-
-        wheelEntries = [];
-        wheelHasLoadedEntries = false;
-        wheelRotation = 0;
-        isSpinning = false;
-
-        spinWheelButton.disabled = true;
-        loadWheelButton.disabled = false;
-
-        wheelResultName.textContent = "No winner selected yet.";
-        wheelResultNote.textContent = "Load eligible entries to begin.";
-        wheelCount.textContent = "Load eligible entries to begin.";
-
-        eligiblePreview.replaceChildren();
-
-        const li = document.createElement("li");
-        li.textContent = "Load eligible entries to see the list.";
-        eligiblePreview.appendChild(li);
-
-        drawWheel();
-        updateCount();
-
-        showLoggedOut();
-        showMessage("You have signed out.");
-      }
+    // New bottom sign-out button
+    document.getElementById("logout-button-bottom").addEventListener(
+      "click",
+      signOutAdmin
     );
 
     // --------------------------------------------------
-    // COPY ELIGIBLE USERNAMES
+    // COPY ELIGIBLE USERNAMES 
     // --------------------------------------------------
 
     document.getElementById("copy-button").addEventListener(
