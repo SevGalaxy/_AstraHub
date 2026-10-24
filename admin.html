@@ -486,6 +486,10 @@
       SUPABASE_ANON_KEY
     );
 
+    // Only this account may use the admin interface.
+    // Supabase Row Level Security must enforce the same restriction.
+    const ADMIN_USER_ID = "0ce9ee5f-903f-494a-b3db-c1defd13933e";
+
     const loginPanel = document.getElementById("login-panel");
     const adminPanel = document.getElementById("admin-panel");
     const loginForm = document.getElementById("login-form");
@@ -1100,18 +1104,29 @@
       const password = document.getElementById("password").value;
 
       try {
-        const { error } = await client.auth.signInWithPassword({
+        // Keep private controls hidden until the account is verified.
+        showLoggedOut();
+
+        const { data, error } = await client.auth.signInWithPassword({
           email,
           password
         });
 
-        if (error) {
+        if (error || !data?.user) {
+          showLoggedOut();
           showMessage("Sign-in failed. Check your email and password.");
           return;
         }
 
-        showLoggedIn();
+        if (data.user.id !== ADMIN_USER_ID) {
+          await client.auth.signOut();
+          showLoggedOut();
+          showMessage("Access denied. This account isn't authorised.");
+          return;
+        }
 
+        showLoggedIn();
+        showMessage("Signed in. Loading admin data...");
         await loadSettings();
         await loadEntries();
       } catch (error) {
@@ -1209,43 +1224,52 @@
     // --------------------------------------------------
 
     async function checkSession() {
-  // Always hide the admin panel until access is verified.
-  showLoggedOut();
+      // Fail closed: keep the admin panel hidden until verified.
+      showLoggedOut();
 
-  const { data, error } = await client.auth.getSession();
+      try {
+        const { data, error } = await client.auth.getSession();
 
-  if (error || !data.session) {
+        if (error || !data?.session?.user) {
+          showLoggedOut();
+          showMessage("Please sign in with your admin account.");
+          return;
+        }
+
+        if (data.session.user.id !== ADMIN_USER_ID) {
+          await client.auth.signOut();
+          showLoggedOut();
+          showMessage("Access denied. This account isn't authorised.");
+          return;
+        }
+
+        showLoggedIn();
+        showMessage("Admin account verified. Loading data...");
+        await loadSettings();
+        await loadEntries();
+      } catch (error) {
+        console.error("Admin session check failed:", error);
+        showLoggedOut();
+        showMessage("Couldn't verify your session. Please sign in again.");
+      }
+    }
+
+    // Never reveal private controls from an auth event alone.
+    // checkSession() and the login handler verify the account first.
+    client.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_OUT") {
+        showLoggedOut();
+        entries = [];
+        entriesBody.replaceChildren();
+        wheelEntries = [];
+        wheelHasLoadedEntries = false;
+        spinWheelButton.disabled = true;
+        drawWheel();
+      }
+    });
+
+    // Start hidden, then verify any saved session.
     showLoggedOut();
-    showMessage("Please sign in with your admin account.");
-    return;
-  }
-
-  // Replace this with your existing authorised admin user's UUID.
-  const ADMIN_USER_ID = "0ce9ee5f-903f-494a-b3db-c1defd13933e";
-
-  if (data.session.user.id !== ADMIN_USER_ID) {
-    await client.auth.signOut();
-    showLoggedOut();
-    showMessage("Access denied. This account isn't authorised.");
-    return;
-  }
-
-  showLoggedIn();
-  await loadSettings();
-  await loadEntries();
-}
-
-    client.auth.onAuthStateChange((event, session) => {
-  if (event === "SIGNED_OUT" || !session) {
-    showLoggedOut();
-    return;
-  }
-
-  if (session.user.id !== "0ce9ee5f-903f-494a-b3db-c1defd13933e") {
-    showLoggedOut();
-  }
-});
-
     drawWheel();
     checkSession();
   </script>
